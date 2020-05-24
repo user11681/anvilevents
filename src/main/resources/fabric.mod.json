@@ -15,7 +15,7 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "transfarmer.anvilevents.Anvilevents"
+            "transfarmer.anvilevents.Main"
         ]
     },
     "mixins": [

@@ -3,8 +3,10 @@
     "package": "transfarmer.anvilevents.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+        "I18n.MixinLanguage"
     ],
     "client": [
+        "I18n.MixinI18n"
     ],
     "injectors": {
         "defaultRequire": 1
