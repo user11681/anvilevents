@@ -4,13 +4,12 @@ plugins {
 }
 
 apply plugin: "maven"
-apply from: "custom.gradle"
+apply from: "common.gradle"
+apply from: "project.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archiveBaseName
-version = project.modVersion
 group = project.mavenGroup
 
 minecraft {
@@ -25,6 +24,12 @@ dependencies {
 
     modImplementation "${project.anvil}"
     include "${project.anvil}"
+
+    modImplementation "${project.modMenu}"
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
 processResources {
