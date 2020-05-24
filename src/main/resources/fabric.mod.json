@@ -3,7 +3,7 @@
     "id": "anvilevents",
     "version": "${version}",
     "name": "Anvilevents",
-    "description": "an API that adds events for Anvil",
+    "description": "an API that adds events for Anvil event API",
     "authors": [
         "transfarmer"
     ],
@@ -11,7 +11,7 @@
         "sources": "https://github.com/transfarmer/anvilevents"
     },
     "license": "CC0-1.0",
-    "icon": "assets/anvilevents/icon.png",
+    "icon": "assets/anvilevents/logo.png",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -25,5 +25,8 @@
         "fabricloader": ">=0.8.4+build.198",
         "fabric": "*",
         "minecraft": "1.15.2"
+    },
+    "custom": {
+        "modmenu:api": true
     }
 }
