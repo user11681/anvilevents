@@ -4,7 +4,6 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Language;
 import transfarmer.anvil.event.Event;
-import transfarmer.anvil.event.EventInvoker;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +25,6 @@ import static net.minecraft.util.ActionResult.CONSUME;
  * and cancels further processing.
  */
 public class TranslationEvent extends Event {
-    public static final EventInvoker<TranslationEvent> INVOKER = new EventInvoker<>(TranslationEvent.class);
-
     protected String value;
     protected String key;
     protected List<Object> args;
@@ -62,9 +59,5 @@ public class TranslationEvent extends Event {
     public void setValue(final String value) {
         this.value = value;
         this.result = CONSUME;
-    }
-
-    public static TranslationEvent fire(final String value, final String key, final Object... args) {
-        return INVOKER.fire(new TranslationEvent(value, key, args));
     }
 }
