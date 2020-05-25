@@ -26,10 +26,10 @@ can be found in the `transfarmer.anvilevents.event` package:
 - MouseButtonEvent, called before `Mouse#onMouseButton(long, int, int, int)` on mouse click;
 - MouseScrollEvent, called before `Mouse#onMouseScroll(long, double, double)` on mouse scroll; and
 - RenderHUDEvent, called at the head of `InGameHud#render(float)`;
-- RenderHUDElementEvent derivatives: one for each element, called in `InGameHud#render(float)`;
 <details>
 <summary>
 
+- RenderHUDElementEvent derivatives: one for each element, called in `InGameHud#render(float)`;
 </summary>
 
     foo
