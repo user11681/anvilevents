@@ -33,23 +33,23 @@ MouseEvent derivatives;
 </details>
 <details>
 <summary>
-RenderHUDElementEvent derivatives: one for each element;
+RenderHUDElementEvent derivatives: one for each element; called at the head of its method;
 </summary>
 <ul>
-<li>RenderCrosshairEvent, called at the head of <code>InGameHud#renderCrosshair</code>;</li>
-<li>RenderExperienceBarEvent, called at the head of <code>InGameHud#renderExperienceBar</code>;</li>
-<li>RenderHeldTooltipEvent, called at the head of <code>InGameHud#renderHeldItemTooltip</code>;</li>
-<li>RenderHotbarEvent, called at the head of <code>InGameHud#renderHotbar</code>;</li>
-<li>RenderHotbarItemEvent, called at the head of <code>InGameHud#renderHotbarItem</code>;</li>
-<li>RenderJumpBarEvent, called at the head of <code>InGameHud#renderMountJumpBar</code>;</li>
-<li>RenderMountHealthEvent, called at the head of <code>InGameHud#renderMountHealth</code>;</li>
-<li>RenderPortalOverlayEvent, called at the head of <code>InGameHud#renderPortalOverlay</code>;</li>
-<li>RenderPumpkinOverlayEvent, called at the head of <code>InGameHud#renderPumpkinOverlay</code>;</li>
-<li>RenderScoreboardSidebarEvent, called at the head of <code>InGameHud#renderScoreboardSidebar</code>;</li>
-<li>RenderStatusBarsEvent, called at the head of <code>InGameHud#renderStatusBars</code>;</li>
-<li>RenderStatusEffectsEvent, called at the head of <code>InGameHud#renderStatusEffectOverlay</code>;</li>
-<li>RenderTextBackgroundEvent, called at the head of <code>InGameHud#drawTextBackground(TextRenderer, int, int)</code>; and</li>
-<li>RenderVignetteEvent, called at the head of <code>InGameHud#renderVignetteOverlay</code>.</li>
+<li>RenderCrosshairEvent in <code>InGameHud#renderCrosshair()</code>;</li>
+<li>RenderExperienceBarEvent in <code>InGameHud#renderExperienceBar(int)</code>;</li>
+<li>RenderHeldTooltipEvent in <code>InGameHud#renderHeldItemTooltip()</code>;</li>
+<li>RenderHotbarEvent in <code>InGameHud#renderHotbar(float)</code>;</li>
+<li>RenderHotbarItemEvent in <code>InGameHud#renderHotbarItem(int, int, float)</code>;</li>
+<li>RenderJumpBarEvent in <code>InGameHud#renderMountJumpBar(int)</code>;</li>
+<li>RenderMountHealthEvent in <code>InGameHud#renderMountHealth()</code>;</li>
+<li>RenderPortalOverlayEvent in <code>InGameHud#renderPortalOverlay(float)</code>;</li>
+<li>RenderPumpkinOverlayEvent in <code>InGameHud#renderPumpkinOverlay()</code>;</li>
+<li>RenderScoreboardSidebarEvent in <code>InGameHud#renderScoreboardSidebar(ScoreboardObjective)</code>;</li>
+<li>RenderStatusBarsEvent in <code>InGameHud#renderStatusBars()</code>;</li>
+<li>RenderStatusEffectsEvent in <code>InGameHud#renderStatusEffectOverlay()</code>;</li>
+<li>RenderTextBackgroundEvent in <code>InGameHud#drawTextBackground(TextRenderer, int, int)</code>; and</li>
+<li>RenderVignetteEvent in <code>InGameHud#renderVignetteOverlay(Entity)</code>;</li>
 </ul>
 </details>
 
