@@ -28,10 +28,6 @@ dependencies {
     modImplementation "${project.modMenu}"
 }
 
-configurations.all {
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
 processResources {
     inputs.property "version", project.version
 

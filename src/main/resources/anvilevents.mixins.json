@@ -3,10 +3,13 @@
     "package": "transfarmer.anvilevents.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "I18n.MixinLanguage"
+        "i18n.LanguageMixin"
     ],
     "client": [
-        "I18n.MixinI18n"
+        "client.MinecraftClientMixin",
+        "client.InGameHudMixin",
+        "client.MouseMixin",
+        "client.I18nMixin"
     ],
     "injectors": {
         "defaultRequire": 1
