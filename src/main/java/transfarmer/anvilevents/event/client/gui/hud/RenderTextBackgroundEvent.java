@@ -6,7 +6,7 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderTextBackgroundEvent extends RenderHUDElementEvent {
+public class RenderTextBackgroundEvent extends RenderHudElementEvent {
     protected TextRenderer renderer;
     protected int y;
     protected int width;

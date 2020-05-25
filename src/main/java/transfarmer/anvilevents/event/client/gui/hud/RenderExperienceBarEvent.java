@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderExperienceBarEvent extends RenderHUDElementEvent {
+public class RenderExperienceBarEvent extends RenderHudElementEvent {
     protected int x;
 
     public RenderExperienceBarEvent(final InGameHud hud, final int x) {

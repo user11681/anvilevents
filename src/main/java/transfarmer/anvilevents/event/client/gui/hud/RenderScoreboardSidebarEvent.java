@@ -6,7 +6,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.scoreboard.ScoreboardObjective;
 
 @Environment(EnvType.CLIENT)
-public class RenderScoreboardSidebarEvent extends RenderHUDElementEvent {
+public class RenderScoreboardSidebarEvent extends RenderHudElementEvent {
     private ScoreboardObjective objective;
 
     public RenderScoreboardSidebarEvent(final InGameHud hud, final ScoreboardObjective objective) {

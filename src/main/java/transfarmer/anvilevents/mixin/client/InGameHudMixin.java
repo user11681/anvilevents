@@ -19,7 +19,7 @@ import transfarmer.anvil.event.EventInvoker;
 import transfarmer.anvilevents.event.client.gui.hud.RenderTextBackgroundEvent;
 import transfarmer.anvilevents.event.client.gui.hud.RenderCrosshairEvent;
 import transfarmer.anvilevents.event.client.gui.hud.RenderExperienceBarEvent;
-import transfarmer.anvilevents.event.client.gui.hud.RenderHUDEvent;
+import transfarmer.anvilevents.event.client.gui.hud.RenderHudEvent;
 import transfarmer.anvilevents.event.client.gui.hud.RenderHeldTooltipEvent;
 import transfarmer.anvilevents.event.client.gui.hud.RenderHotbarEvent;
 import transfarmer.anvilevents.event.client.gui.hud.RenderHotbarItemEvent;
@@ -62,7 +62,7 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(final float tickDelta, final CallbackInfo info) {
-        if (EventInvoker.fire(new RenderHUDEvent(thiz(), tickDelta)).getResult() == ActionResult.FAIL) {
+        if (EventInvoker.fire(new RenderHudEvent(thiz(), tickDelta)).getResult() == ActionResult.FAIL) {
             info.cancel();
         }
     }

@@ -7,7 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
-public class RenderHotbarItemEvent extends RenderHUDElementEvent {
+public class RenderHotbarItemEvent extends RenderHudElementEvent {
     protected int x;
     protected int y;
     protected float tickDelta;

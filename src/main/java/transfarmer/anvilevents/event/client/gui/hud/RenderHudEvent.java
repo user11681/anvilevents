@@ -6,11 +6,11 @@ import net.minecraft.client.gui.hud.InGameHud;
 import transfarmer.anvil.event.Event;
 
 @Environment(EnvType.CLIENT)
-public class RenderHUDEvent extends Event {
+public class RenderHudEvent extends Event {
     protected final InGameHud hud;
     protected final float tickDelta;
 
-    public RenderHUDEvent(final InGameHud hud, final float tickDelta) {
+    public RenderHudEvent(final InGameHud hud, final float tickDelta) {
         this.hud = hud;
         this.tickDelta = tickDelta;
     }

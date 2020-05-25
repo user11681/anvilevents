@@ -34,7 +34,7 @@ MouseEvent derivatives;
 
 <details>
 <summary>
-RenderHUDElementEvent derivatives: one for each element; called at the head of its method;
+RenderHudElementEvent derivatives: one for each element; called at the head of its method;
 </summary>
 <ul>
 <li>RenderCrosshairEvent in <code>InGameHud#renderCrosshair()</code>;</li>
@@ -54,5 +54,5 @@ RenderHUDElementEvent derivatives: one for each element; called at the head of i
 </ul>
 </details>
 
-- RenderHUDEvent, called at the head of `InGameHud#render(float)`;
+- RenderHudEvent, called at the head of `InGameHud#render(float)`;
 - TranslationEvent, called in `I18n#translate(String, Object...)` and `Language#translate(String)`.

@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderStatusBarsEvent extends RenderHUDElementEvent {
+public class RenderStatusBarsEvent extends RenderHudElementEvent {
     public RenderStatusBarsEvent(final InGameHud hud) {
         super(hud, Element.STATUS_BARS);
     }

@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderHotbarEvent extends RenderHUDElementEvent {
+public class RenderHotbarEvent extends RenderHudElementEvent {
     protected final float tickDelta;
 
     public RenderHotbarEvent(final InGameHud hud,  final float tickDelta) {

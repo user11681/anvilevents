@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderCrosshairEvent extends RenderHUDElementEvent {
+public class RenderCrosshairEvent extends RenderHudElementEvent {
     public RenderCrosshairEvent(final InGameHud hud) {
         super(hud, Element.CROSSHAIR);
     }

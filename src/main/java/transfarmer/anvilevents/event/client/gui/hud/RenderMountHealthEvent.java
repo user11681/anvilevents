@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderMountHealthEvent extends RenderHUDElementEvent {
+public class RenderMountHealthEvent extends RenderHudElementEvent {
     public RenderMountHealthEvent(final InGameHud hud) {
         super(hud, Element.MOUNT_HEALTH);
     }

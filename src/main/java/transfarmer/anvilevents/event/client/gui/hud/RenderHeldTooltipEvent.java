@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderHeldTooltipEvent extends RenderHUDElementEvent {
+public class RenderHeldTooltipEvent extends RenderHudElementEvent {
     public RenderHeldTooltipEvent(final InGameHud hud) {
         super(hud, Element.HELD_TOOLTIP);
     }

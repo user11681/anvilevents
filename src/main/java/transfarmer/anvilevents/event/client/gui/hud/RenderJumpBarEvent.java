@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderJumpBarEvent extends RenderHUDElementEvent {
+public class RenderJumpBarEvent extends RenderHudElementEvent {
     protected int x;
 
     public RenderJumpBarEvent(final InGameHud hud, final int x) {

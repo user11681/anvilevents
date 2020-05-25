@@ -6,7 +6,7 @@ import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.Entity;
 
 @Environment(EnvType.CLIENT)
-public class RenderVignetteEvent extends RenderHUDElementEvent {
+public class RenderVignetteEvent extends RenderHudElementEvent {
     protected Entity entity;
 
     public RenderVignetteEvent(final InGameHud hud, final Entity entity) {

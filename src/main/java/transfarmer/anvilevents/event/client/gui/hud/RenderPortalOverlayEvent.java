@@ -5,7 +5,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class RenderPortalOverlayEvent extends RenderHUDElementEvent {
+public class RenderPortalOverlayEvent extends RenderHudElementEvent {
     protected float nauseaStrength;
 
     public RenderPortalOverlayEvent(final InGameHud hud, final float nauseaStrength) {
