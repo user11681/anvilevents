@@ -24,7 +24,7 @@ can be found in the `transfarmer.anvilevents.event` package:
 - ClientTickEvent, called at the head of `MinecraftClient#tick()`
 <details>
 <summary>
-MouseEvent derivatives;
+<ul><li>MouseEvent derivatives;</li></ul>
 </summary>
 
 - CursorPosEvent, called before `Mouse#onCursorPos(long, double, double)` on change in mouse position;
