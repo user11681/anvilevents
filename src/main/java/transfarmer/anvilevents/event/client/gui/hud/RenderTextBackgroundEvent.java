@@ -6,12 +6,12 @@ import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
 
 @Environment(EnvType.CLIENT)
-public class DrawTextBackgroundEvent extends RenderHUDElementEvent {
+public class RenderTextBackgroundEvent extends RenderHUDElementEvent {
     protected TextRenderer renderer;
     protected int y;
     protected int width;
 
-    public DrawTextBackgroundEvent(final InGameHud hud, final TextRenderer renderer, final int y, final int width) {
+    public RenderTextBackgroundEvent(final InGameHud hud, final TextRenderer renderer, final int y, final int width) {
         super(hud, Element.TEXT_BACKGROUND);
 
         this.renderer = renderer;

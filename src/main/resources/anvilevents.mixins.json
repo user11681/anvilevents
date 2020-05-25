@@ -6,10 +6,10 @@
         "i18n.LanguageMixin"
     ],
     "client": [
-        "client.MinecraftClientMixin",
+        "client.I18nMixin",
         "client.InGameHudMixin",
-        "client.MouseMixin",
-        "client.I18nMixin"
+        "client.MinecraftClientMixin",
+        "client.MouseMixin"
     ],
     "injectors": {
         "defaultRequire": 1
