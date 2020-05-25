@@ -30,6 +30,7 @@ MouseEvent derivatives;
 - CursorPosEvent, called before `Mouse#onCursorPos(long, double, double)` on change in mouse position;
 - MouseButtonEvent, called before `Mouse#onMouseButton(long, int, int, int)` on mouse click;
 - MouseScrollEvent, called before `Mouse#onMouseScroll(long, double, double)` on mouse scroll; and
+</details>
 <details>
 <summary>
 RenderHUDElementEvent derivatives: one for each element;
