@@ -25,15 +25,14 @@ can be found in the `transfarmer.anvilevents.event` package:
 - CursorPosEvent, called before `Mouse#onCursorPos(long, double, double)` on change in mouse position;
 - MouseButtonEvent, called before `Mouse#onMouseButton(long, int, int, int)` on mouse click;
 - MouseScrollEvent, called before `Mouse#onMouseScroll(long, double, double)` on mouse scroll; and
-- RenderHUDEvent, called at the head of `InGameHud#render(float)`;
 <details>
 <summary>
-
-- RenderHUDElementEvent derivatives: one for each element, called in `InGameHud#render(float)`;
+RenderHUDElementEvent derivatives: one for each element, called in `InGameHud#render(float)`;
 </summary>
 
     foo
 
 </details>
 
+- RenderHUDEvent, called at the head of `InGameHud#render(float)`;
 - TranslationEvent, called in `I18n#translate(String, Object...)` and `Language#translate(String)`.
