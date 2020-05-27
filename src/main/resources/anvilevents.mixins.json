@@ -1,15 +1,26 @@
 {
     "required": true,
-    "package": "transfarmer.anvilevents.mixin",
+    "package": "user11681.anvilevents.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
-        "i18n.LanguageMixin"
+        "block.BlockMixin",
+        "block.BlockStateMixin",
+        "entity.EntityMixin",
+        "entity.ItemEntityMixin",
+        "entity.LivingEntityMixin",
+        "entity.PlayerEntityMixin",
+        "entity.ServerPlayerEntityMixin",
+        "i18n.LanguageMixin",
+        "item.ItemMixin",
+        "world.ServerWorldMixin"
     ],
     "client": [
-        "client.I18nMixin",
+        "item.ItemStackMixin",
+        "i18n.I18nMixin",
         "client.InGameHudMixin",
         "client.MinecraftClientMixin",
-        "client.MouseMixin"
+        "client.MouseMixin",
+        "client.ScreenMixin"
     ],
     "injectors": {
         "defaultRequire": 1

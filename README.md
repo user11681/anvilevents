@@ -21,38 +21,86 @@ Follow the guide [here](https://github.com/transfarmer/anvil#listening-to-events
 
 ### a list of included events
 can be found in the `transfarmer.anvilevents.event` package:
-- ClientTickEvent, called at the head of `MinecraftClient#tick()`
-<details>
-<summary>
-MouseEvent derivatives;
-</summary>
 
-- CursorPosEvent, called before `Mouse#onCursorPos(long, double, double)` on change in mouse position;
-- MouseButtonEvent, called before `Mouse#onMouseButton(long, int, int, int)` on mouse click; and
-- MouseScrollEvent, called before `Mouse#onMouseScroll(long, double, double)` on mouse scroll;
+<details>
+<summary><code>BlockEvent</code>s;</summary>
+
+- `BlockDropEvent`;
+</details>
+
+- `ClientTickEvent`, called at the head of `MinecraftClient#tick()`
+
+<details>
+<summary><code>EntityEvent</code>s;</summary>
+
+- `EnderTeleportEvent`, called in `Entity#requestTeleport(double, double, double)`;
+- `EntityDamageEvent.Pre` called at the head of `Entity#damage(DamageSource, float)`;
+- `EntityDamageEvent.Post`, called before returning from `Entity#damage(DamageSource, float)`; and
+- `EntityLandEvent`, called at the head of `Block#onLandedUpon(World, BlockPos, Entity, float)`;
 </details>
 
 <details>
-<summary>
-RenderHudElementEvent derivatives: one for each element; called at the head of its method;
-</summary>
-<ul>
-<li>RenderCrosshairEvent in <code>InGameHud#renderCrosshair()</code>;</li>
-<li>RenderExperienceBarEvent in <code>InGameHud#renderExperienceBar(int)</code>;</li>
-<li>RenderHeldTooltipEvent in <code>InGameHud#renderHeldItemTooltip()</code>;</li>
-<li>RenderHotbarEvent in <code>InGameHud#renderHotbar(float)</code>;</li>
-<li>RenderHotbarItemEvent in <code>InGameHud#renderHotbarItem(int, int, float)</code>;</li>
-<li>RenderJumpBarEvent in <code>InGameHud#renderMountJumpBar(int)</code>;</li>
-<li>RenderMountHealthEvent in <code>InGameHud#renderMountHealth()</code>;</li>
-<li>RenderPortalOverlayEvent in <code>InGameHud#renderPortalOverlay(float)</code>;</li>
-<li>RenderPumpkinOverlayEvent in <code>InGameHud#renderPumpkinOverlay()</code>;</li>
-<li>RenderScoreboardSidebarEvent in <code>InGameHud#renderScoreboardSidebar(ScoreboardObjective)</code>;</li>
-<li>RenderStatusBarsEvent in <code>InGameHud#renderStatusBars()</code>;</li>
-<li>RenderStatusEffectsEvent in <code>InGameHud#renderStatusEffectOverlay()</code>;</li>
-<li>RenderTextBackgroundEvent in <code>InGameHud#drawTextBackground(TextRenderer, int, int)</code>; and</li>
-<li>RenderVignetteEvent in <code>InGameHud#renderVignetteOverlay(Entity)</code>;</li>
-</ul>
+<summary><code>LivingEvent</code>s</summary>
+
+- `LivingCollisionEvent`, called before returning from `LivingEntity#tickMovement()`;
+- `LivingDeathEvent`, called at the head of `LivingEntity#onDeath(DamageSource)`;
+- `LivingDropExperienceEvent`, called at the head of `LivingEntity#dropXp()`;
+- `LivingKnockbackEvent`, called in `LivingEntity#takeKnockback(Entity, float, double, double)`;
+- `LivingTickEvent.Pre`, called at the head of `LivingEntity#tick()`;
+- `LivingTickEvent.Post`, called before returning from `LivingEntity#tick()`;
 </details>
 
-- RenderHudEvent, called at the head of `InGameHud#render(float)`;
-- TranslationEvent, called in `I18n#translate(String, Object...)` and `Language#translate(String)`.
+<details>
+<summary><code>PlayerEvent</code>s</summary>
+
+- `BreakSpeedEvent`, called before returning from `PlayerEntity#getBlockBreakingSpeed(BlockState)`;
+- `ItemPickupEvent`, called in `ItemEntity#onPlayerCollision(PlayerEntity)`;
+- `PlayerChangedDimensionEvent`, called at the head of `ServerWorld#onPlayerChangeDimension(ServerPlayerEntity)`;
+- `PlayerConnectedEvent`, called at the head of `ServerWorld#onPlayerConnected(ServerPlayerEntity)`;
+- `PlayerRespawnedEvent`, called at the head of `ServerWorld#onPlayerRespawned(ServerPlayerEntity)`;
+- `PlayerCopyEvent`, called at the head of `ServerPlayerEntity#copyFrom(ServerPlayerEntity, boolean)`;
+- `PlayerDropInventoryEvent`, called at the head of `PlayerEntity#dropInventory()`;
+- `PlayerTickEvent.Pre`, called at the head of `PlayerEntity#tick()`;
+- `PlayerTickEvent.Post`, called before returning from `PlayerEntity#tick()`; and
+- `UseBlockEvent`, called at the head of `BlockState#onUse(World, PlayerEntity, Hand, BlockHitResult)`;
+</details>
+
+<details>
+<summary><code>ItemEvent</code>s</summary>
+
+- `ItemTooltipEvent`, called before returning from `ItemStack#getTooltip(PlayerEntity, TooltipContext)`; and
+- `UseItemEvent`, called at the head of `Item#use(World, PlayerEntity, Hand)`;
+</details>
+
+<details>
+<summary><code>MouseEvent</code>s;</summary>
+
+- `CursorPosEvent`, called in `Mouse#onCursorPos(long, double, double)` on change in mouse position;
+- `MouseButtonEvent`, called in `Mouse#onMouseButton(long, int, int, int)` on mouse click; and
+- `MouseScrollEvent`, called in `Mouse#onMouseScroll(long, double, double)` on mouse scroll;
+</details>
+
+<details>
+<summary><code>RenderHudElementEvent</code>s: one for each element, called at the head of its method;</summary>
+
+- `RenderCrosshairEvent` in `InGameHud#renderCrosshair()`;
+- `RenderExperienceBarEvent` in `InGameHud#renderExperienceBar(int)`;
+- `RenderHeldTooltipEvent` in `InGameHud#renderHeldItemTooltip()`;
+- `RenderHotbarEvent` in `InGameHud#renderHotbar(float)`;
+- `RenderHotbarItemEvent` in `InGameHud#renderHotbarItem(int, int, float)`;
+- `RenderJumpBarEvent` in `InGameHud#renderMountJumpBar(int)`;
+- `RenderMountHealthEvent` in `InGameHud#renderMountHealth()`;
+- `RenderPortalOverlayEvent` in `InGameHud#renderPortalOverlay(float)`;
+- `RenderPumpkinOverlayEvent` in `InGameHud#renderPumpkinOverlay()`;
+- `RenderScoreboardSidebarEvent` in `InGameHud#renderScoreboardSidebar(ScoreboardObjective)`;
+- `RenderStatusBarsEvent` in `InGameHud#renderStatusBars()`;
+- `RenderStatusEffectsEvent` in `InGameHud#renderStatusEffectOverlay()`;
+- `RenderTextBackgroundEvent` in `InGameHud#drawTextBackground(TextRenderer, int, int)`; and
+- `RenderVignetteEvent` in `InGameHud#renderVignetteOverlay(Entity)`;
+</details>
+
+- `RenderHudEvent`, called at the head of `InGameHud#render(float)`;
+- `RenderTooltipEvent.Pre` and `RenderTooltipEvent.Post`,
+called at the head of and before returning from `Screen#renderTooltip(List<String>, x, y)` respectively;
+- 
+- `TranslationEvent`, called in `I18n#translate(String, Object...)` and `Language#translate(String)` before returning.

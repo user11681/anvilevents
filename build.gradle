@@ -1,11 +1,9 @@
 plugins {
-    id 'fabric-loom' version '0.4.15'
+    id 'fabric-loom' version '0.4-SNAPSHOT'
     id 'maven-publish'
 }
 
-apply plugin: "maven"
 apply from: "common.gradle"
-apply from: "project.gradle"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -23,9 +21,10 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
 
     modImplementation "${project.anvil}"
-    include "${project.anvil}"
 
     modImplementation "${project.modMenu}"
+
+    modImplementation "${project.overpowered}"
 }
 
 processResources {
@@ -77,6 +76,6 @@ publishing {
     // select the repositories you want to publish to
     repositories {
         // uncomment to publish to the local maven
-        // mavenLocal()
+         mavenLocal()
     }
 }
