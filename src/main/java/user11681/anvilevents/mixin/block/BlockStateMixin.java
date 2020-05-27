@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import transfarmer.anvil.event.EventInvoker;
+import user11681.anvil.event.EventInvoker;
 import user11681.anvilevents.event.entity.player.UseBlockEvent;
 
 @Mixin(BlockState.class)

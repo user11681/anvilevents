@@ -3,7 +3,7 @@ package user11681.anvilevents.event.i18n;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Language;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 import java.util.ArrayList;
 import java.util.Arrays;

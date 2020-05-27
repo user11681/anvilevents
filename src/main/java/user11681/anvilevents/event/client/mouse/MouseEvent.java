@@ -3,7 +3,7 @@ package user11681.anvilevents.event.client.mouse;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Mouse;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 @Environment(EnvType.CLIENT)
 public abstract class MouseEvent extends Event {

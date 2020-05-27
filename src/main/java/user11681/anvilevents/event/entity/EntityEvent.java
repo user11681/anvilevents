@@ -1,7 +1,7 @@
 package user11681.anvilevents.event.entity;
 
 import net.minecraft.entity.Entity;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 public abstract class EntityEvent extends Event {
     protected Entity entity;

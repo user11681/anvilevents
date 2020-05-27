@@ -3,7 +3,7 @@ package user11681.anvilevents.event.client.gui;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.screen.Screen;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 import java.util.List;
 

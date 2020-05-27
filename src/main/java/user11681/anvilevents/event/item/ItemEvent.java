@@ -1,7 +1,7 @@
 package user11681.anvilevents.event.item;
 
 import net.minecraft.item.ItemStack;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 public abstract class ItemEvent extends Event {
     protected ItemStack itemStack;

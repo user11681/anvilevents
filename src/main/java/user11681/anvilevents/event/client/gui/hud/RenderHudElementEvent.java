@@ -3,7 +3,7 @@ package user11681.anvilevents.event.client.gui.hud;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.hud.InGameHud;
-import transfarmer.anvil.event.Event;
+import user11681.anvil.event.Event;
 
 @Environment(EnvType.CLIENT)
 public abstract class RenderHudElementEvent extends Event {
