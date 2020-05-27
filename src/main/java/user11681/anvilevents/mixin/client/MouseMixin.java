@@ -35,7 +35,7 @@ public abstract class MouseMixin {
     protected boolean scroll = true;
 
     @Inject(method = "onCursorPos(JDD)V", at = @At("HEAD"), cancellable = true)
-    public void onOnCursorPos(final long window, final double x, final double y, final CallbackInfo info) {
+    protected void onOnCursorPos(final long window, final double x, final double y, final CallbackInfo info) {
         if (this.pos) {
             final CursorPosEvent event = EventInvoker.fire(new CursorPosEvent(thiz(), window, x, y));
 
@@ -50,7 +50,7 @@ public abstract class MouseMixin {
     }
 
     @Inject(method = "onMouseButton(JIII)V", at = @At("HEAD"), cancellable = true)
-    public void onOnMouseButton(final long window, final int button, final int action, final int mods, final CallbackInfo info) {
+    protected void onOnMouseButton(final long window, final int button, final int action, final int mods, final CallbackInfo info) {
         if (this.button) {
             final MouseButtonEvent event = EventInvoker.fire(new MouseButtonEvent(thiz(), window, this.x, this.y, button, action, mods));
 
@@ -68,7 +68,7 @@ public abstract class MouseMixin {
     }
 
     @Inject(method = "onMouseScroll(JDD)V", at = @At("HEAD"), cancellable = true)
-    public void onOnMouseScroll(final long window, final double dX, final double dY, final CallbackInfo info) {
+    protected void onOnMouseScroll(final long window, final double dX, final double dY, final CallbackInfo info) {
         if (this.scroll) {
             final MouseScrollEvent event = EventInvoker.fire(new MouseScrollEvent(thiz(), window, this.x, this.y, dX, dY));
 

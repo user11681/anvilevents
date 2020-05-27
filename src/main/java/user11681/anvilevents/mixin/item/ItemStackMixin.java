@@ -1,8 +1,8 @@
 package user11681.anvilevents.mixin.item;
 
-import com.sun.istack.internal.Nullable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nullable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.item.TooltipContext;
