@@ -23,13 +23,13 @@ Follow the guide [here](https://github.com/user11681/anvil#listening-to-events).
 can be found in the `user11681.anvilevents.event` package:
 
 <details>
-<summary><code>BlockEvent</code></summary>
+&emsp;<summary><code>BlockEvent</code></summary>
 
 - `BlockDropEvent`, called before returning from `Block#getDroppedStacks(BlockState, LootContext.Builder)`
 </details>
 
 <details>
-<summary><code>EntityEvent</code></summary>
+&emsp;<summary><code>EntityEvent</code></summary>
 
 - `EnderTeleportEvent`, called in `Entity#requestTeleport(double, double, double)`
 - `EntityDamageEvent.Pre` called at the head of `Entity#damage(DamageSource, float)`
@@ -38,7 +38,7 @@ can be found in the `user11681.anvilevents.event` package:
 </details>
 
 <details>
-<summary><code>LivingEvent</code></summary>
+&emsp;<summary><code>LivingEvent</code></summary>
 
 - `LivingCollisionEvent`, called before returning from `LivingEntity#tickMovement()`
 - `LivingDeathEvent`, called at the head of `LivingEntity#onDeath(DamageSource)`
@@ -49,7 +49,7 @@ can be found in the `user11681.anvilevents.event` package:
 </details>
 
 <details>
-<summary><code>PlayerEvent</code></summary>
+&emsp;<summary><code>PlayerEvent</code></summary>
 
 - `BreakSpeedEvent`, called before returning from `PlayerEntity#getBlockBreakingSpeed(BlockState)`
 - `ItemPickupEvent`, called in `ItemEntity#onPlayerCollision(PlayerEntity)`
@@ -64,14 +64,14 @@ can be found in the `user11681.anvilevents.event` package:
 </details>
 
 <details>
-<summary><code>ItemEvent</code></summary>
+&emsp;<summary><code>ItemEvent</code></summary>
 
 - `ItemTooltipEvent`, called before returning from `ItemStack#getTooltip(PlayerEntity, TooltipContext)` and
 - `UseItemEvent`, called at the head of `Item#use(World, PlayerEntity, Hand)`
 </details>
 
 <details>
-<summary><code>MouseEvent</code></summary>
+&emsp;<summary><code>MouseEvent</code></summary>
 
 - `CursorPosEvent`, called in `Mouse#onCursorPos(long, double, double)` on change in mouse position
 - `MouseButtonEvent`, called in `Mouse#onMouseButton(long, int, int, int)` on mouse click and
@@ -79,7 +79,7 @@ can be found in the `user11681.anvilevents.event` package:
 </details>
 
 <details>
-<summary><code>RenderHudElementEvent</code>s: one for each element, each called at the head of its method</summary>
+&emsp;<summary><code>RenderHudElementEvent</code>s: one for each element, each called at the head of its method</summary>
 
 <ul>
 
