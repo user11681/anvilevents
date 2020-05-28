@@ -49,17 +49,17 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
     }
 */
 
-    @Override
-    public boolean superDamage(final DamageSource source, final float damage) {
-        return super.damage(source, damage);
-    }
-
 /*
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"), cancellable = true)
     protected void postDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
         super.postDamage(source, damage, info);
     }
 */
+
+    @Override
+    public boolean superDamage(final DamageSource source, final float damage) {
+        return super.damage(source, damage);
+    }
 
     @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
     private void onTakeKnockback(final Entity attacker, final float speed, final double x, final double z, final CallbackInfo info) {
@@ -119,7 +119,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     @Inject(method = "tickMovement()V", at = @At("RETURN"))
     protected void onTickMovement(final CallbackInfo info) {
-        final List<Entity> nearbyEntities = this.world.getEntities(thiz(), this.getBoundingBox());
+        final List<Entity> nearbyEntities = thiz().world.getEntities(thiz(), thiz().getBoundingBox());
 
         if (!nearbyEntities.isEmpty()) {
             EventInvoker.fire(new LivingCollisionEvent(thiz(), nearbyEntities));
