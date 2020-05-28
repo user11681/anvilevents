@@ -7,10 +7,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.util.ActionResult;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvil.event.EventInvoker;
 import user11681.anvilevents.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.LivingCollisionEvent;
@@ -21,38 +21,48 @@ import user11681.anvilevents.event.entity.LivingTickEvent;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityDuck {
+    @Shadow
+    protected abstract void dropXp();
+
     protected boolean knockback = true;
     protected boolean death = true;
     protected boolean xp = true;
 
-//    @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("HEAD"), cancellable = true)
-//    protected void preDamage(final DamageSource source, final float damage,
-//                             final CallbackInfoReturnable<Boolean> info) {
-//        if (this.damage) {
-//            final Entity thiz = thiz();
-//            final EntityDamageEvent event = EventInvoker.fire(new EntityDamageEvent.Pre(thiz, source, damage));
-//
-//            if (event.isFail()) {
-//                info.setReturnValue(false);
-//            } else {
-//                final Entity entity = event.getEntity();
-//
-//                this.damage = false;
-//                info.setReturnValue(entity.damage(event.getSource(), event.getDamage()) && thiz == entity || event.isAccepted());
-//                this.damage = true;
-//            }
-//        }
-//    }
+/*
+    @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("HEAD"), cancellable = true)
+    protected void preDamage(final DamageSource source, final float damage,
+                             final CallbackInfoReturnable<Boolean> info) {
+        if (this.damage) {
+            final Entity thiz = thiz();
+            final EntityDamageEvent event = EventInvoker.fire(new EntityDamageEvent.Pre(thiz, source, damage));
 
-    @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"), cancellable = true)
-    protected void postDamage(final DamageSource source, final float damage,
-                              final CallbackInfoReturnable<Boolean> info) {
-        super.postDamage(source, damage, info);
+            if (event.isFail()) {
+                info.setReturnValue(false);
+            } else {
+                final Entity entity = event.getEntity();
+
+                this.damage = false;
+                info.setReturnValue(entity.damage(event.getSource(), event.getDamage()) && thiz == entity || event.isAccepted());
+                this.damage = true;
+            }
+        }
+    }
+*/
+
+    @Override
+    public boolean superDamage(final DamageSource source, final float damage) {
+        return super.damage(source, damage);
     }
 
+/*
+    @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"), cancellable = true)
+    protected void postDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
+        super.postDamage(source, damage, info);
+    }
+*/
+
     @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
-    private void onTakeKnockback(final Entity attacker, final float speed, final double x, final double z,
-                                 final CallbackInfo info) {
+    private void onTakeKnockback(final Entity attacker, final float speed, final double x, final double z, final CallbackInfo info) {
         if (this.knockback) {
             final LivingKnockbackEvent event = EventInvoker.fire(new LivingKnockbackEvent(thiz(), attacker, speed, x, z));
 
@@ -88,7 +98,8 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
             if (!event.isFail()) {
                 this.xp = false;
-                ((LivingEntityDuck) event.getEntity()).dropXp();
+                //noinspection ConstantConditions
+                ((LivingEntityMixin) (Object) event.getEntity()).dropXp();
                 this.xp = true;
             }
 
@@ -117,10 +128,5 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     private LivingEntity thiz() {
         return (LivingEntity) (Object) this;
-    }
-
-    @Override
-    public boolean superDamage(final DamageSource source, final float damage) {
-        return super.damage(source, damage);
     }
 }
