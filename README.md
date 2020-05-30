@@ -17,7 +17,7 @@ include "com.github.user11681:anvilevents:${VERSION}"
 Follow the same procedure for anvil (described on its GitHub page).
 
 ### registering event listeners
-Follow the guide [here](https://github.com/user11681/anvil#listening-to-events).
+Follow the guide [here](https://github.com/user11681/anvil#registering-listener-classes).
 
 ### a list of included events
 can be found in the `user11681.anvilevents.event` package:
