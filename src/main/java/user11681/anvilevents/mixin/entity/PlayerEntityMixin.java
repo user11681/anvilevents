@@ -3,18 +3,21 @@ package user11681.anvilevents.mixin.entity;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvil.event.EventInvoker;
-import user11681.anvilevents.duck.entity.PlayerEntityDuck;
 import user11681.anvilevents.event.entity.player.BreakSpeedEvent;
 import user11681.anvilevents.event.entity.player.PlayerDropInventoryEvent;
 import user11681.anvilevents.event.entity.player.PlayerTickEvent;
 
 @Mixin(PlayerEntity.class)
-public abstract class PlayerEntityMixin extends LivingEntityMixin implements PlayerEntityDuck {
+public abstract class PlayerEntityMixin extends LivingEntityMixin {
+    @Shadow
+    protected abstract void dropInventory();
+
     protected boolean drop = true;
     protected boolean speed = true;
 
@@ -25,7 +28,8 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin implements Pla
 
             if (!event.isFail()) {
                 this.drop = false;
-                ((PlayerEntityDuck) event.getPlayer()).dropInventory();
+                //noinspection ConstantConditions
+                ((PlayerEntityMixin) (Object) event.getPlayer()).dropInventory();
                 this.drop = true;
             }
 
