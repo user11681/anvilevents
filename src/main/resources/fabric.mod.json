@@ -1,7 +1,7 @@
 {
     "schemaVersion": 1,
     "id": "anvilevents",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "name": "anvil events",
     "description": "an API that adds events for anvil",
     "authors": [
