@@ -15,7 +15,7 @@ import user11681.anvilevents.event.entity.living.LivingDeathEvent;
 import user11681.anvilevents.event.entity.living.LivingDropExperienceEvent;
 import user11681.anvilevents.event.entity.living.LivingKnockbackEvent;
 import user11681.anvilevents.event.entity.living.LivingTickEvent;
-import user11681.anvilevents.event.entity.player.BreakSpeedEvent;
+import user11681.anvilevents.event.entity.player.BlockBreakSpeedEvent;
 import user11681.anvilevents.event.entity.player.ItemPickupEvent;
 import user11681.anvilevents.event.entity.player.PlayerChangedDimensionEvent;
 import user11681.anvilevents.event.entity.player.PlayerConnectedEvent;
@@ -45,7 +45,7 @@ public class Main implements CommonEventInitializer {
                 LivingTickEvent.Pre.class,
                 LivingTickEvent.Post.class,
 
-                BreakSpeedEvent.class,
+                BlockBreakSpeedEvent.class,
                 ItemPickupEvent.class,
                 PlayerChangedDimensionEvent.class,
                 PlayerConnectedEvent.class,
