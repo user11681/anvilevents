@@ -72,7 +72,7 @@ public abstract class BlockMixin {
                 if (event.isAccepted()) {
                     info.setReturnValue(event.getSpeed());
                 } else {
-                    info.setReturnValue(event.getBlock().calcBlockBreakingDelta(state, player, world, pos));
+                    info.setReturnValue(event.getBlock().calcBlockBreakingDelta(event.getState(), event.getPlayer(), world, event.getBlockPos()));
                 }
             }
 
