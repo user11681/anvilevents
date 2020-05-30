@@ -26,6 +26,7 @@ can be found in the `user11681.anvilevents.event` package:
 &emsp;<summary><code>BlockEvent</code></summary>
 
 - `BlockDropEvent`, called before returning from `Block#getDroppedStacks(BlockState, LootContext.Builder)`
+- `BreakSpeedEvent`, called at the head of `Block#calcBlockBreakingDelta(BlockState, PlayerEntity, BlockView, BlockPos)`
 </details>
 
 <details>
@@ -51,7 +52,6 @@ can be found in the `user11681.anvilevents.event` package:
 <details>
 &emsp;<summary><code>PlayerEvent</code></summary>
 
-- `BreakSpeedEvent`, called before returning from `PlayerEntity#getBlockBreakingSpeed(BlockState)`
 - `ItemPickupEvent`, called in `ItemEntity#onPlayerCollision(PlayerEntity)`
 - `PlayerChangedDimensionEvent`, called at the head of `ServerWorld#onPlayerChangeDimension(ServerPlayerEntity)`
 - `PlayerConnectedEvent`, called at the head of `ServerWorld#onPlayerConnected(ServerPlayerEntity)`
