@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.living.LivingCollisionEvent;
 import user11681.anvilevents.event.entity.living.LivingDeathEvent;
@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
                              final CallbackInfoReturnable<Boolean> info) {
         if (this.damage) {
             final Entity thiz = thiz();
-            final EntityDamageEvent event = EventInvoker.fire(new EntityDamageEvent.Pre(thiz, source, damage));
+            final EntityDamageEvent event = Anvil.fire(new EntityDamageEvent.Pre(thiz, source, damage));
 
             if (event.isFail()) {
                 info.setReturnValue(false);
@@ -64,7 +64,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
     @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
     private void onTakeKnockback(final Entity attacker, final float speed, final double x, final double z, final CallbackInfo info) {
         if (this.knockback) {
-            final LivingKnockbackEvent event = EventInvoker.fire(new LivingKnockbackEvent(thiz(), attacker, speed, x, z));
+            final LivingKnockbackEvent event = Anvil.fire(new LivingKnockbackEvent(thiz(), attacker, speed, x, z));
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.knockback = false;
@@ -79,7 +79,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
     @Inject(method = "onDeath(Lnet/minecraft/entity/damage/DamageSource;)V", at = @At("HEAD"), cancellable = true)
     private void onOnDeath(final DamageSource source, final CallbackInfo info) {
         if (this.death) {
-            final LivingDeathEvent event = EventInvoker.fire(new LivingDeathEvent(thiz(), source));
+            final LivingDeathEvent event = Anvil.fire(new LivingDeathEvent(thiz(), source));
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.death = false;
@@ -94,7 +94,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
     @Inject(method = "dropXp", at = @At("HEAD"), cancellable = true)
     protected void onDropXp(final CallbackInfo info) {
         if (this.xp) {
-            final LivingDropExperienceEvent event = EventInvoker.fire(new LivingDropExperienceEvent(thiz()));
+            final LivingDropExperienceEvent event = Anvil.fire(new LivingDropExperienceEvent(thiz()));
 
             if (!event.isFail()) {
                 this.xp = false;
@@ -109,12 +109,12 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     @Inject(method = "tick()V", at = @At("HEAD"))
     protected void preTick(final CallbackInfo info) {
-        EventInvoker.fire(new LivingTickEvent.Pre(thiz()));
+        Anvil.fire(new LivingTickEvent.Pre(thiz()));
     }
 
     @Inject(method = "tick()V", at = @At("RETURN"))
     protected void postTick(final CallbackInfo info) {
-        EventInvoker.fire(new LivingTickEvent.Post(thiz()));
+        Anvil.fire(new LivingTickEvent.Post(thiz()));
     }
 
     @Inject(method = "tickMovement()V", at = @At("RETURN"))
@@ -122,7 +122,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         final List<Entity> nearbyEntities = thiz().world.getEntities(thiz(), thiz().getBoundingBox());
 
         if (!nearbyEntities.isEmpty()) {
-            EventInvoker.fire(new LivingCollisionEvent(thiz(), nearbyEntities));
+            Anvil.fire(new LivingCollisionEvent(thiz(), nearbyEntities));
         }
     }
 

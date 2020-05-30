@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.duck.entity.EntityDuck;
 import user11681.anvilevents.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
@@ -39,7 +39,7 @@ public abstract class EntityMixin implements EntityDuck {
     protected void preDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
         if (this.damage) {
             final Entity thiz = thiz();
-            final EntityDamageEvent event = EventInvoker.fire(new EntityDamageEvent.Pre(thiz, source, damage));
+            final EntityDamageEvent event = Anvil.fire(new EntityDamageEvent.Pre(thiz, source, damage));
 
             if (event.isFail()) {
                 info.setReturnValue(false);
@@ -61,14 +61,14 @@ public abstract class EntityMixin implements EntityDuck {
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"))
     protected void postDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
         if (info.getReturnValue()) {
-            EventInvoker.fire(new EntityDamageEvent.Post(thiz(), source, damage));
+            Anvil.fire(new EntityDamageEvent.Post(thiz(), source, damage));
         }
     }
 
     @Inject(method = "requestTeleport(DDD)V", at = @At(value = "JUMP", opcode = Opcodes.INSTANCEOF, ordinal = 0), cancellable = true)
     protected void onRequestTeleport(final double x, final double y, final double z, final CallbackInfo info) {
         if (this.teleport) {
-            final EnderTeleportEvent event = EventInvoker.fire(new EnderTeleportEvent(thiz(), x, y, z));
+            final EnderTeleportEvent event = Anvil.fire(new EnderTeleportEvent(thiz(), x, y, z));
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.teleport = false;

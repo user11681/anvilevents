@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.event.client.gui.RenderTooltipEvent;
 
 @Environment(EnvType.CLIENT)
@@ -19,7 +19,7 @@ public abstract class ScreenMixin {
     @Inject(method = "renderTooltip(Ljava/util/List;II)V", at = @At("HEAD"), cancellable = true)
     protected void preRenderTooltip(final List<String> tooltip, final int x, final int y, final CallbackInfo info) {
         if (this.available) {
-            final RenderTooltipEvent event = EventInvoker.fire(new RenderTooltipEvent.Pre(thiz(), tooltip, x, y));
+            final RenderTooltipEvent event = Anvil.fire(new RenderTooltipEvent.Pre(thiz(), tooltip, x, y));
 
             if (!event.isFail()) {
                 this.available = false;
@@ -33,7 +33,7 @@ public abstract class ScreenMixin {
 
     @Inject(method = "renderTooltip(Ljava/util/List;II)V", at = @At("RETURN"))
     protected void postRenderTooltip(final List<String> tooltip, final int x, final int y, final CallbackInfo info) {
-        EventInvoker.fire(new RenderTooltipEvent.Post(thiz(), tooltip, x, y));
+        Anvil.fire(new RenderTooltipEvent.Post(thiz(), tooltip, x, y));
     }
 
     protected Screen thiz() {

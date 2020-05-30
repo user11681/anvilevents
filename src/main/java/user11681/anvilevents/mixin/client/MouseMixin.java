@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.event.client.mouse.CursorPosEvent;
 import user11681.anvilevents.event.client.mouse.MouseButtonEvent;
 import user11681.anvilevents.event.client.mouse.MouseScrollEvent;
@@ -37,7 +37,7 @@ public abstract class MouseMixin {
     @Inject(method = "onCursorPos(JDD)V", at = @At("HEAD"), cancellable = true)
     protected void onOnCursorPos(final long window, final double x, final double y, final CallbackInfo info) {
         if (this.pos) {
-            final CursorPosEvent event = EventInvoker.fire(new CursorPosEvent(thiz(), window, x, y));
+            final CursorPosEvent event = Anvil.fire(new CursorPosEvent(thiz(), window, x, y));
 
             if (!event.isFail()) {
                 this.pos = false;
@@ -52,7 +52,7 @@ public abstract class MouseMixin {
     @Inject(method = "onMouseButton(JIII)V", at = @At("HEAD"), cancellable = true)
     protected void onOnMouseButton(final long window, final int button, final int action, final int mods, final CallbackInfo info) {
         if (this.button) {
-            final MouseButtonEvent event = EventInvoker.fire(new MouseButtonEvent(thiz(), window, this.x, this.y, button, action, mods));
+            final MouseButtonEvent event = Anvil.fire(new MouseButtonEvent(thiz(), window, this.x, this.y, button, action, mods));
 
             if (!event.isFail()) {
                 this.x = event.getX();
@@ -70,7 +70,7 @@ public abstract class MouseMixin {
     @Inject(method = "onMouseScroll(JDD)V", at = @At("HEAD"), cancellable = true)
     protected void onOnMouseScroll(final long window, final double dX, final double dY, final CallbackInfo info) {
         if (this.scroll) {
-            final MouseScrollEvent event = EventInvoker.fire(new MouseScrollEvent(thiz(), window, this.x, this.y, dX, dY));
+            final MouseScrollEvent event = Anvil.fire(new MouseScrollEvent(thiz(), window, this.x, this.y, dX, dY));
 
             if (!event.isFail()) {
                 this.x = event.getX();

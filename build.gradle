@@ -24,6 +24,8 @@ dependencies {
     modImplementation "${project.modmenu}"
 
     modImplementation "${project.limitless}"
+
+    modImplementation "${project.usersmanual}"
 }
 
 processResources {

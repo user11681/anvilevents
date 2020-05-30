@@ -8,19 +8,20 @@
         "entity.EntityMixin",
         "entity.ItemEntityMixin",
         "entity.LivingEntityMixin",
-        "entity.PlayerEntityMixin",
-        "entity.ServerPlayerEntityMixin",
+        "entity.player.PlayerEntityMixin",
+        "entity.player.PlayerInventoryMixin",
+        "entity.player.ServerPlayerEntityMixin",
         "i18n.LanguageMixin",
         "item.ItemMixin",
         "world.ServerWorldMixin"
     ],
     "client": [
-        "item.ItemStackMixin",
-        "i18n.I18nMixin",
         "client.InGameHudMixin",
         "client.MinecraftClientMixin",
         "client.MouseMixin",
-        "client.ScreenMixin"
+        "client.ScreenMixin",
+        "i18n.I18nMixin",
+        "item.ItemStackMixin"
     ],
     "injectors": {
         "defaultRequire": 1

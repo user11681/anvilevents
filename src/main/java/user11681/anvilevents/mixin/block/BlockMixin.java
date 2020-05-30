@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.event.block.BlockDropEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
 
@@ -27,7 +27,7 @@ public abstract class BlockMixin {
     @Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContext$Builder;)Ljava/util/List;", at = @At("RETURN"), cancellable = true)
     protected void onGetDroppedStacks(final BlockState state, final LootContext.Builder builder, final CallbackInfoReturnable<List<ItemStack>> info) {
         if (this.drop) {
-            final BlockDropEvent event = EventInvoker.fire(new BlockDropEvent(thiz(), state, builder, info.getReturnValue()));
+            final BlockDropEvent event = Anvil.fire(new BlockDropEvent(thiz(), state, builder, info.getReturnValue()));
 
             if (event.isFail()) {
                 info.setReturnValue(Collections.emptyList());
@@ -44,7 +44,7 @@ public abstract class BlockMixin {
     @Inject(method = "onLandedUpon(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;F)V", at = @At("HEAD"), cancellable = true)
     protected void onOnLandedUpon(final World world, final BlockPos position, final Entity entity, final float distance, final CallbackInfo info) {
         if (this.land) {
-            final EntityLandEvent event = EventInvoker.fire(new EntityLandEvent(entity, thiz(), world, position, distance));
+            final EntityLandEvent event = Anvil.fire(new EntityLandEvent(entity, thiz(), world, position, distance));
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.land = false;

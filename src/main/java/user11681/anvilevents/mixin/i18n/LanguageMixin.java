@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.event.EventInvoker;
+import user11681.anvil.Anvil;
 import user11681.anvilevents.event.i18n.TranslationEvent;
 
 @Mixin(Language.class)
@@ -21,7 +21,7 @@ public abstract class LanguageMixin {
      */
     @Inject(method = "translate", at = @At("RETURN"), cancellable = true)
     public synchronized void translate(final String key, final CallbackInfoReturnable<String> info) {
-        final TranslationEvent event = EventInvoker.fire(new TranslationEvent(this.getTranslation(key), key));
+        final TranslationEvent event = Anvil.fire(new TranslationEvent(this.getTranslation(key), key));
         final ActionResult result = event.getResult();
 
         switch (result) {
