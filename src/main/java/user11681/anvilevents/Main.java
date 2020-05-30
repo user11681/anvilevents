@@ -4,29 +4,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import user11681.anvil.entrypoint.EventInitializer;
+import user11681.anvil.entrypoint.CommonEventInitializer;
 import user11681.anvil.event.Event;
 import user11681.anvilevents.event.block.BlockDropEvent;
-import user11681.anvilevents.event.client.ClientTickEvent;
-import user11681.anvilevents.event.client.gui.RenderTooltipEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderCrosshairEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderExperienceBarEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderHeldTooltipEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderHotbarEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderHotbarItemEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderHudEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderJumpBarEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderMountHealthEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderPortalOverlayEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderPumpkinOverlayEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderScoreboardSidebarEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderStatusBarsEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderStatusEffectsEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderTextBackgroundEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderVignetteEvent;
-import user11681.anvilevents.event.client.mouse.CursorPosEvent;
-import user11681.anvilevents.event.client.mouse.MouseButtonEvent;
-import user11681.anvilevents.event.client.mouse.MouseScrollEvent;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
@@ -46,10 +26,9 @@ import user11681.anvilevents.event.entity.player.PlayerTickEvent;
 import user11681.anvilevents.event.entity.player.UseBlockEvent;
 import user11681.anvilevents.event.i18n.TranslationEvent;
 import user11681.anvilevents.event.item.ItemEvent;
-import user11681.anvilevents.event.item.ItemTooltipEvent;
 import user11681.anvilevents.event.item.UseItemEvent;
 
-public class Main implements EventInitializer {
+public class Main implements CommonEventInitializer {
     public static final String MOD_ID = "anvilevents";
 
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
@@ -58,32 +37,6 @@ public class Main implements EventInitializer {
     public Collection<Class<? extends Event>> get() {
         return Arrays.asList(
                 BlockDropEvent.class,
-
-                RenderCrosshairEvent.class,
-                RenderExperienceBarEvent.class,
-                RenderHeldTooltipEvent.class,
-                RenderHotbarEvent.class,
-                RenderHotbarItemEvent.class,
-                RenderHudEvent.class,
-                RenderJumpBarEvent.class,
-                RenderMountHealthEvent.class,
-                RenderPortalOverlayEvent.class,
-                RenderPumpkinOverlayEvent.class,
-                RenderScoreboardSidebarEvent.class,
-                RenderStatusBarsEvent.class,
-                RenderStatusEffectsEvent.class,
-                RenderTextBackgroundEvent.class,
-                RenderVignetteEvent.class,
-
-                RenderTooltipEvent.Pre.class,
-                RenderTooltipEvent.Post.class,
-
-                CursorPosEvent.class,
-                MouseButtonEvent.class,
-                MouseScrollEvent.class,
-
-                ClientTickEvent.Pre.class,
-                ClientTickEvent.Post.class,
 
                 LivingCollisionEvent.class,
                 LivingDeathEvent.class,
@@ -112,7 +65,6 @@ public class Main implements EventInitializer {
                 TranslationEvent.class,
 
                 ItemEvent.class,
-                ItemTooltipEvent.class,
                 UseItemEvent.class
         );
     }

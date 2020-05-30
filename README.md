@@ -33,7 +33,7 @@ can be found in the `user11681.anvilevents.event` package:
 
 - `EnderTeleportEvent`, called in `Entity#requestTeleport(double, double, double)`
 - `EntityDamageEvent.Pre` called at the head of `Entity#damage(DamageSource, float)`
-- `EntityDamageEvent.Post`, called before returning from `Entity#damage(DamageSource, float)` and
+- `EntityDamageEvent.Post`, called before returning from `Entity#damage(DamageSource, float)`
 - `EntityLandEvent`, called at the head of `Block#onLandedUpon(World, BlockPos, Entity, float)`
 </details>
 
@@ -59,14 +59,14 @@ can be found in the `user11681.anvilevents.event` package:
 - `PlayerCopyEvent`, called at the head of `ServerPlayerEntity#copyFrom(ServerPlayerEntity, boolean)`
 - `PlayerDropInventoryEvent`, called at the head of `PlayerEntity#dropInventory()`
 - `PlayerTickEvent.Pre`, called at the head of `PlayerEntity#tick()`
-- `PlayerTickEvent.Post`, called before returning from `PlayerEntity#tick()` and
+- `PlayerTickEvent.Post`, called before returning from `PlayerEntity#tick()`
 - `UseBlockEvent`, called at the head of `BlockState#onUse(World, PlayerEntity, Hand, BlockHitResult)`
+- `ItemTooltipEvent`, called before returning from `ItemStack#getTooltip(PlayerEntity, TooltipContext)`
 </details>
 
 <details>
 &emsp;<summary><code>ItemEvent</code></summary>
 
-- `ItemTooltipEvent`, called before returning from `ItemStack#getTooltip(PlayerEntity, TooltipContext)` and
 - `UseItemEvent`, called at the head of `Item#use(World, PlayerEntity, Hand)`
 </details>
 

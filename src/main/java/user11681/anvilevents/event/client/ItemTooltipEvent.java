@@ -1,4 +1,4 @@
-package user11681.anvilevents.event.item;
+package user11681.anvilevents.event.client;
 
 import java.util.List;
 import net.fabricmc.api.EnvType;
@@ -7,17 +7,18 @@ import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
+import user11681.anvilevents.event.entity.player.PlayerEvent;
 
 @Environment(EnvType.CLIENT)
-public class ItemTooltipEvent extends ItemEvent {
+public class ItemTooltipEvent extends PlayerEvent {
     protected TooltipContext context;
-    protected PlayerEntity player;
     protected List<Text> tooltip;
+    protected ItemStack itemStack;
 
-    public ItemTooltipEvent(final ItemStack itemStack, final PlayerEntity player, final TooltipContext context, final List<Text> tooltip) {
-        super(itemStack);
+    public ItemTooltipEvent(final PlayerEntity player, final ItemStack itemStack, final TooltipContext context, final List<Text> tooltip) {
+        super(player);
 
-        this.player = player;
+        this.itemStack = itemStack;
         this.tooltip = tooltip;
         this.context = context;
     }
@@ -36,14 +37,6 @@ public class ItemTooltipEvent extends ItemEvent {
 
     public void setTooltip(final List<Text> tooltip) {
         this.tooltip = tooltip;
-    }
-
-    public PlayerEntity getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(final PlayerEntity player) {
-        this.player = player;
     }
 
     public TooltipContext getContext() {

@@ -14,8 +14,11 @@
     "icon": "assets/anvilevents/logo.png",
     "environment": "*",
     "entrypoints": {
-        "anvilEvents": [
+        "anvilCommonEvents": [
             "user11681.anvilevents.Main"
+        ],
+        "anvilClientEvents": [
+            "user11681.anvilevents.Client"
         ]
     },
     "mixins": [
