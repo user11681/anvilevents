@@ -21,7 +21,7 @@ dependencies {
     modImplementation "${project.anvil}"
     include "${project.anvil}"
 
-    modImplementation "${project.modMenu}"
+    modImplementation "${project.modmenu}"
 
     modImplementation "${project.overpowered}"
 }
