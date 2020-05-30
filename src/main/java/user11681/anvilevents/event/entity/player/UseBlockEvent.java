@@ -2,6 +2,7 @@ package user11681.anvilevents.event.entity.player;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.world.World;
@@ -48,5 +49,9 @@ public class UseBlockEvent extends PlayerEvent {
 
     public void setHitResult(final BlockHitResult result) {
         this.result = result;
+    }
+
+    public ItemStack getItemStack() {
+        return this.player.getStackInHand(this.hand);
     }
 }
