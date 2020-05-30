@@ -28,7 +28,7 @@ import user11681.anvilevents.event.client.mouse.MouseScrollEvent;
 
 public class Client implements ClientEventInitializer {
     @Override
-    public Collection<Class<? extends Event>> get() {;
+    public Collection<Class<? extends Event>> get() {
         return Arrays.asList(
                 RenderCrosshairEvent.class,
                 RenderExperienceBarEvent.class,
