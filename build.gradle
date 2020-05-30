@@ -23,7 +23,7 @@ dependencies {
 
     modImplementation "${project.modmenu}"
 
-    modImplementation "${project.overpowered}"
+    modImplementation "${project.limitless}"
 }
 
 processResources {
