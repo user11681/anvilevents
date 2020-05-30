@@ -21,6 +21,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.apiVersion}"
 
     modImplementation "${project.anvil}"
+    include "${project.anvil}"
 
     modImplementation "${project.modMenu}"
 

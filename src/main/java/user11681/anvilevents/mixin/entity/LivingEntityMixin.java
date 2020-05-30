@@ -13,11 +13,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import user11681.anvil.event.EventInvoker;
 import user11681.anvilevents.duck.entity.LivingEntityDuck;
-import user11681.anvilevents.event.entity.LivingCollisionEvent;
-import user11681.anvilevents.event.entity.LivingDeathEvent;
-import user11681.anvilevents.event.entity.LivingDropExperienceEvent;
-import user11681.anvilevents.event.entity.LivingKnockbackEvent;
-import user11681.anvilevents.event.entity.LivingTickEvent;
+import user11681.anvilevents.event.entity.living.LivingCollisionEvent;
+import user11681.anvilevents.event.entity.living.LivingDeathEvent;
+import user11681.anvilevents.event.entity.living.LivingDropExperienceEvent;
+import user11681.anvilevents.event.entity.living.LivingKnockbackEvent;
+import user11681.anvilevents.event.entity.living.LivingTickEvent;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityDuck {

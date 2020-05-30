@@ -1,4 +1,4 @@
-package user11681.anvilevents.event.entity;
+package user11681.anvilevents.event.entity.living;
 
 import net.minecraft.entity.LivingEntity;
 

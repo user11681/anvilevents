@@ -1,4 +1,4 @@
-package user11681.anvilevents.event.entity;
+package user11681.anvilevents.event.entity.living;
 
 import java.util.List;
 import net.minecraft.entity.Entity;
