@@ -6,7 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import user11681.anvil.entrypoint.CommonEventInitializer;
 import user11681.anvil.event.Event;
-import user11681.anvilevents.event.block.BlockDropEvent;
+import user11681.anvilevents.event.block.BlockLootEvent;
+import user11681.anvilevents.event.block.EntityMineDropEvent;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
@@ -25,7 +26,6 @@ import user11681.anvilevents.event.entity.player.PlayerRespawnedEvent;
 import user11681.anvilevents.event.entity.player.PlayerTickEvent;
 import user11681.anvilevents.event.entity.player.UseBlockEvent;
 import user11681.anvilevents.event.i18n.TranslationEvent;
-import user11681.anvilevents.event.item.ItemEvent;
 import user11681.anvilevents.event.item.UseItemEvent;
 
 public class Main implements CommonEventInitializer {
@@ -36,7 +36,8 @@ public class Main implements CommonEventInitializer {
     @Override
     public Collection<Class<? extends Event>> get() {
         return Arrays.asList(
-                BlockDropEvent.class,
+                EntityMineDropEvent.class,
+                BlockLootEvent.class,
 
                 LivingCollisionEvent.class,
                 LivingDeathEvent.class,
@@ -54,7 +55,6 @@ public class Main implements CommonEventInitializer {
                 PlayerRespawnedEvent.class,
                 PlayerTickEvent.Pre.class,
                 PlayerTickEvent.Post.class,
-
                 UseBlockEvent.class,
 
                 EnderTeleportEvent.class,
@@ -64,7 +64,6 @@ public class Main implements CommonEventInitializer {
 
                 TranslationEvent.class,
 
-                ItemEvent.class,
                 UseItemEvent.class
         );
     }
