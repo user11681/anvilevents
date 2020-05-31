@@ -1,15 +1,12 @@
 package user11681.anvilevents.event.i18n;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Language;
 import user11681.anvil.event.Event;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static net.minecraft.util.ActionResult.CONSUME;
 
 /**
  * This event is called when {@link I18n#translate} and {@link Language#translate} are called.
@@ -58,6 +55,6 @@ public class TranslationEvent extends Event {
 
     public void setValue(final String value) {
         this.value = value;
-        this.result = CONSUME;
+        this.setAccepted();
     }
 }

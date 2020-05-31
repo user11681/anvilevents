@@ -12,15 +12,15 @@ public class UseBlockEvent extends PlayerEvent {
 
     protected BlockState state;
     protected Hand hand;
-    protected BlockHitResult result;
+    protected BlockHitResult hitResult;
 
-    public UseBlockEvent(final PlayerEntity player, final BlockState state, final World world, final Hand hand, final BlockHitResult result) {
+    public UseBlockEvent(final PlayerEntity player, final BlockState state, final World world, final Hand hand, final BlockHitResult hitResult) {
         super(player);
 
         this.state = state;
         this.world = world;
         this.hand = hand;
-        this.result = result;
+        this.hitResult = hitResult;
     }
 
     public BlockState getState() {
@@ -44,11 +44,11 @@ public class UseBlockEvent extends PlayerEvent {
     }
 
     public BlockHitResult getHitResult() {
-        return result;
+        return hitResult;
     }
 
-    public void setHitResult(final BlockHitResult result) {
-        this.result = result;
+    public void setHitResult(final BlockHitResult hitResult) {
+        this.hitResult = hitResult;
     }
 
     public ItemStack getItemStack() {

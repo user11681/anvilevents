@@ -8,7 +8,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.context.LootContext;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
@@ -20,53 +19,52 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvil.Anvil;
-import user11681.anvilevents.event.block.BlockLootEvent;
-import user11681.anvilevents.event.block.EntityMineDropEvent;
+import user11681.anvilevents.event.block.BlockDropEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.player.BlockBreakSpeedEvent;
 
 @Mixin(Block.class)
 public abstract class BlockMixin {
-    private static boolean drop = true;
+    private static BlockDropEvent event;
 
     protected boolean land = true;
     protected boolean delta = true;
+
+    @Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;)Ljava/util/List;",
+            at = @At("RETURN"),
+            cancellable = true)
+    private static void onGetDroppedStacks(final BlockState state, final ServerWorld world, final BlockPos pos, final BlockEntity blockEntity, final CallbackInfoReturnable<List<ItemStack>> info) {
+        if (event == null) {
+            event = Anvil.fire(new BlockDropEvent(state, world, pos, blockEntity, null, null, info.getReturnValue()));
+
+            if (event.isFail()) {
+                info.setReturnValue(Collections.emptyList());
+            } else if (event.isPass()) {
+                info.setReturnValue(Block.getDroppedStacks(event.getState(), event.getWorld(), event.getPos(), event.getBlockEntity()));
+            } else {
+                info.setReturnValue(event.getDroppedStacks());
+            }
+
+            event = null;
+        }
+    }
 
     @Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;Lnet/minecraft/entity/Entity;Lnet/minecraft/item/ItemStack;)Ljava/util/List;",
             at = @At("RETURN"),
             cancellable = true)
     private static void onGetDroppedStacksEntity(final BlockState state, final ServerWorld world, final BlockPos pos, final BlockEntity blockEntity, final Entity entity, final ItemStack stack, final CallbackInfoReturnable<List<ItemStack>> info) {
-        if (drop) {
-            final EntityMineDropEvent event = Anvil.fire(new EntityMineDropEvent(state, world, pos, blockEntity, entity, stack, info.getReturnValue()));
+        if (event == null) {
+            event = Anvil.fire(new BlockDropEvent(state, world, pos, blockEntity, entity, stack, info.getReturnValue()));
 
             if (event.isFail()) {
                 info.setReturnValue(Collections.emptyList());
             } else if (event.isPass()) {
-                drop = false;
-                info.setReturnValue(Block.getDroppedStacks(event.getState(), event.getWorld(), event.getPos(), event.getBlockEntity(), event.getEntity(), event.getTool()));
-                drop = true;
+                info.setReturnValue(Block.getDroppedStacks(event.getState(), event.getWorld(), event.getPos(), event.getBlockEntity(), event.getMiner(), event.getTool()));
             } else {
                 info.setReturnValue(event.getDroppedStacks());
             }
-        }
-    }
 
-    @Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/loot/context/LootContext$Builder;)Ljava/util/List;",
-            at = @At("RETURN"),
-            cancellable = true)
-    protected void onGetDroppedStacks(final BlockState state, final LootContext.Builder builder, final CallbackInfoReturnable<List<ItemStack>> info) {
-        if (drop) {
-            final BlockLootEvent event = Anvil.fire(new BlockLootEvent(thiz(), state, builder, info.getReturnValue()));
-
-            if (event.isFail()) {
-                info.setReturnValue(Collections.emptyList());
-            } else if (event.isPass()) {
-                drop = false;
-                info.setReturnValue(event.getBlock().getDroppedStacks(event.getState(), event.getBuilder()));
-                drop = true;
-            } else {
-                info.setReturnValue(event.getDroppedStacks());
-            }
+            event = null;
         }
     }
 
