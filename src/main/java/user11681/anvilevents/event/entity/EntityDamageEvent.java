@@ -18,21 +18,21 @@ public abstract class EntityDamageEvent extends EntityEvent {
         return source;
     }
 
-    public void setSource(final DamageSource source) {
-        this.source = source;
-    }
-
     public float getDamage() {
         return damage;
-    }
-
-    public void setDamage(final float damage) {
-        this.damage = damage;
     }
 
     public static class Pre extends EntityDamageEvent {
         public Pre(final Entity entity, final DamageSource source, final float damage) {
             super(entity, source, damage);
+        }
+
+        public void setSource(final DamageSource source) {
+            this.source = source;
+        }
+
+        public void setDamage(final float damage) {
+            this.damage = damage;
         }
     }
 
