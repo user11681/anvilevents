@@ -29,9 +29,25 @@ public class TranslationEvent extends Event {
     public TranslationEvent(final String value, final String key, final Object... args) {
         super();
 
-        this.value = value;
         this.key = key;
         this.args = new ArrayList<>(Arrays.asList(args));
+        this.value = value;
+    }
+
+    public String getKey() {
+        return this.key;
+    }
+
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
+    public List<Object> getArgs() {
+        return this.args;
+    }
+
+    public void setArgs(final List<Object> args) {
+        this.args = args;
     }
 
     /**
@@ -39,18 +55,6 @@ public class TranslationEvent extends Event {
      */
     public String getValue() {
         return this.value;
-    }
-
-    public String getKey() {
-        return this.key;
-    }
-
-    public List<Object> getArgs() {
-        return this.args;
-    }
-
-    public void setKey(final String key) {
-        this.key = key;
     }
 
     public void setValue(final String value) {

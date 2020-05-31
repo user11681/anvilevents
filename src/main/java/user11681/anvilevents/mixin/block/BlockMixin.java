@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.Anvil;
 import user11681.anvilevents.event.block.BlockDropEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.player.BlockBreakSpeedEvent;
@@ -26,6 +25,8 @@ import user11681.anvilevents.event.entity.player.BlockBreakSpeedEvent;
 @Mixin(Block.class)
 public abstract class BlockMixin {
     private static BlockDropEvent event;
+
+    protected final Block thiz = (Block) (Object) this;
 
     protected boolean land = true;
     protected boolean delta = true;
@@ -35,7 +36,7 @@ public abstract class BlockMixin {
             cancellable = true)
     private static void onGetDroppedStacks(final BlockState state, final ServerWorld world, final BlockPos pos, final BlockEntity blockEntity, final CallbackInfoReturnable<List<ItemStack>> info) {
         if (event == null) {
-            event = Anvil.fire(new BlockDropEvent(state, world, pos, blockEntity, null, null, info.getReturnValue()));
+            event = new BlockDropEvent(state, world, pos, blockEntity, null, null, info.getReturnValue()).fire();
 
             if (event.isFail()) {
                 info.setReturnValue(Collections.emptyList());
@@ -54,7 +55,7 @@ public abstract class BlockMixin {
             cancellable = true)
     private static void onGetDroppedStacksEntity(final BlockState state, final ServerWorld world, final BlockPos pos, final BlockEntity blockEntity, final Entity entity, final ItemStack stack, final CallbackInfoReturnable<List<ItemStack>> info) {
         if (event == null) {
-            event = Anvil.fire(new BlockDropEvent(state, world, pos, blockEntity, entity, stack, info.getReturnValue()));
+            event = new BlockDropEvent(state, world, pos, blockEntity, entity, stack, info.getReturnValue()).fire();
 
             if (event.isFail()) {
                 info.setReturnValue(Collections.emptyList());
@@ -71,7 +72,7 @@ public abstract class BlockMixin {
     @Inject(method = "onLandedUpon(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;F)V", at = @At("HEAD"), cancellable = true)
     protected void onOnLandedUpon(final World world, final BlockPos position, final Entity entity, final float distance, final CallbackInfo info) {
         if (this.land) {
-            final EntityLandEvent event = Anvil.fire(new EntityLandEvent(entity, thiz(), world, position, distance));
+            final EntityLandEvent event = new EntityLandEvent(entity, thiz, world, position, distance).fire();
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.land = false;
@@ -87,7 +88,7 @@ public abstract class BlockMixin {
     protected void onCalcBlockBreakingDelta(final BlockState state, final PlayerEntity player, final BlockView world, final BlockPos pos, final CallbackInfoReturnable<Float> info) {
         if (this.delta) {
             this.delta = false;
-            final BlockBreakSpeedEvent event = Anvil.fire(new BlockBreakSpeedEvent(thiz(), state, player, world, pos, thiz().calcBlockBreakingDelta(state, player, world, pos)));
+            final BlockBreakSpeedEvent event = new BlockBreakSpeedEvent(thiz, state, player, world, pos, thiz.calcBlockBreakingDelta(state, player, world, pos)).fire();
 
             if (event.isFail()) {
                 info.setReturnValue(0F);
@@ -103,7 +104,4 @@ public abstract class BlockMixin {
         }
     }
 
-    protected Block thiz() {
-        return (Block) (Object) this;
-    }
 }

@@ -1,6 +1,7 @@
 package user11681.anvilevents.mixin.client;
 
-import it.unimi.dsi.fastutil.objects.Reference2ReferenceOpenHashMap;
+import java.util.HashMap;
+import java.util.Map;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
@@ -9,20 +10,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.ScoreboardObjective;
-import net.minecraft.util.ActionResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.Anvil;
-import user11681.anvilevents.event.client.gui.hud.RenderTextBackgroundEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderCrosshairEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderExperienceBarEvent;
-import user11681.anvilevents.event.client.gui.hud.RenderHudEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderHeldTooltipEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderHotbarEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderHotbarItemEvent;
+import user11681.anvilevents.event.client.gui.hud.RenderHudEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderJumpBarEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderMountHealthEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderPortalOverlayEvent;
@@ -30,15 +28,12 @@ import user11681.anvilevents.event.client.gui.hud.RenderPumpkinOverlayEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderScoreboardSidebarEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderStatusBarsEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderStatusEffectsEvent;
+import user11681.anvilevents.event.client.gui.hud.RenderTextBackgroundEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderVignetteEvent;
-
-import java.util.Map;
 
 @Environment(EnvType.CLIENT)
 @Mixin(InGameHud.class)
 public abstract class InGameHudMixin {
-    private final Map<String, Boolean> available = new Reference2ReferenceOpenHashMap<>();
-
     @Shadow
     protected abstract void renderVignetteOverlay(Entity entity);
 
@@ -58,18 +53,21 @@ public abstract class InGameHudMixin {
     protected abstract void renderPortalOverlay(float nauseaStrength);
 
     @Shadow
-    protected abstract void renderHotbarItem(int i, int j, float f, PlayerEntity playerEntity, ItemStack itemStack);
+    protected abstract void renderHotbarItem(int x, int y, float tickDelta, PlayerEntity playerEntity, ItemStack itemStack);
+
+    protected final InGameHud thiz = (InGameHud) (Object) this;
+    protected final Map<String, Boolean> available = new HashMap<>();
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
     private void render(final float tickDelta, final CallbackInfo info) {
-        if (Anvil.fire(new RenderHudEvent(thiz(), tickDelta)).getResult() == ActionResult.FAIL) {
+        if (new RenderHudEvent(thiz, tickDelta).fire().isFail()) {
             info.cancel();
         }
     }
 
     @Inject(method = "renderCrosshair", at = @At("HEAD"), cancellable = true)
     private void onRenderCrosshair(final CallbackInfo info) {
-        if (Anvil.fire(new RenderCrosshairEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderCrosshairEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
@@ -84,9 +82,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderExperienceBarEvent event = Anvil.fire(new RenderExperienceBarEvent(thiz(), x));
+            final RenderExperienceBarEvent event = new RenderExperienceBarEvent(thiz, x).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderExperienceBar(event.getX());
                 available.put(name, true);
@@ -98,21 +96,20 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderHeldItemTooltip", at = @At("HEAD"), cancellable = true)
     private void onRenderHeldItemTooltip(final CallbackInfo info) {
-        if (Anvil.fire(new RenderHeldTooltipEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderHeldTooltipEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
 
     @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
     private void onRenderHotbar(final float tickDelta, final CallbackInfo info) {
-        if (Anvil.fire(new RenderHotbarEvent(thiz(), tickDelta)).getResult() == ActionResult.FAIL) {
+        if (new RenderHotbarEvent(thiz, tickDelta).fire().isFail()) {
             info.cancel();
         }
     }
 
     @Inject(method = "renderHotbarItem", at = @At("HEAD"), cancellable = true)
-    private void onRenderHotbarItem(final int x, final int y, final float tickDelta, final PlayerEntity player,
-                                    final ItemStack itemStack, final CallbackInfo info) {
+    private void onRenderHotbarItem(final int x, final int y, final float tickDelta, final PlayerEntity player, final ItemStack itemStack, final CallbackInfo info) {
         final Map<String, Boolean> available = this.available;
         final String name = "renderHotbarItem";
 
@@ -121,9 +118,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderHotbarItemEvent event = Anvil.fire(new RenderHotbarItemEvent(thiz(), x, y, tickDelta, player, itemStack));
+            final RenderHotbarItemEvent event = new RenderHotbarItemEvent(thiz, x, y, tickDelta, player, itemStack).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderHotbarItem(event.getX(), event.getY(), event.getTickDelta(), event.getPlayer(), event.getItemStack());
                 available.put(name, true);
@@ -135,7 +132,7 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderMountHealth", at = @At("HEAD"), cancellable = true)
     private void onRenderMountHealth(final CallbackInfo info) {
-        if (Anvil.fire(new RenderMountHealthEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderMountHealthEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
@@ -150,9 +147,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderJumpBarEvent event = Anvil.fire(new RenderJumpBarEvent(thiz(), x));
+            final RenderJumpBarEvent event = new RenderJumpBarEvent(thiz, x).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderMountJumpBar(event.getX());
                 available.put(name, true);
@@ -172,9 +169,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderPortalOverlayEvent event = Anvil.fire(new RenderPortalOverlayEvent(thiz(), nauseaStrength));
+            final RenderPortalOverlayEvent event = new RenderPortalOverlayEvent(thiz, nauseaStrength).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderPortalOverlay(event.getNauseaStrength());
                 available.put(name, true);
@@ -186,7 +183,7 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderPumpkinOverlay", at = @At("HEAD"), cancellable = true)
     private void onRenderPumpkinOverlay(final CallbackInfo info) {
-        if (Anvil.fire(new RenderPumpkinOverlayEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderPumpkinOverlayEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
@@ -201,9 +198,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderScoreboardSidebarEvent event = Anvil.fire(new RenderScoreboardSidebarEvent(thiz(), objective));
+            final RenderScoreboardSidebarEvent event = new RenderScoreboardSidebarEvent(thiz, objective).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderScoreboardSidebar(event.getObjective());
                 available.put(name, true);
@@ -215,14 +212,14 @@ public abstract class InGameHudMixin {
 
     @Inject(method = "renderStatusBars", at = @At("HEAD"), cancellable = true)
     private void onRenderStatusBars(final CallbackInfo info) {
-        if (Anvil.fire(new RenderStatusBarsEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderStatusBarsEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
 
     @Inject(method = "renderStatusEffectOverlay", at = @At("HEAD"), cancellable = true)
     private void onRenderStatusEffectOverlay(final CallbackInfo info) {
-        if (Anvil.fire(new RenderStatusEffectsEvent(thiz())).getResult() == ActionResult.FAIL) {
+        if (new RenderStatusEffectsEvent(thiz).fire().isFail()) {
             info.cancel();
         }
     }
@@ -238,9 +235,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderTextBackgroundEvent event = Anvil.fire(new RenderTextBackgroundEvent(thiz(), renderer, y, width));
+            final RenderTextBackgroundEvent event = new RenderTextBackgroundEvent(thiz, renderer, y, width).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.drawTextBackground(event.getRenderer(), event.getY(), event.getWidth());
                 available.put(name, true);
@@ -260,9 +257,9 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderVignetteEvent event = Anvil.fire(new RenderVignetteEvent(thiz(), entity));
+            final RenderVignetteEvent event = new RenderVignetteEvent(thiz, entity).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 available.put(name, false);
                 this.renderVignetteOverlay(event.getEntity());
                 available.put(name, true);
@@ -270,9 +267,5 @@ public abstract class InGameHudMixin {
 
             info.cancel();
         }
-    }
-
-    protected InGameHud thiz() {
-        return (InGameHud) (Object) this;
     }
 }

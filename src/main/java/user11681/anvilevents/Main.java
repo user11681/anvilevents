@@ -10,6 +10,7 @@ import user11681.anvilevents.event.block.BlockDropEvent;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
+import user11681.anvilevents.event.entity.EntityTickEvent;
 import user11681.anvilevents.event.entity.living.LivingCollisionEvent;
 import user11681.anvilevents.event.entity.living.LivingDeathEvent;
 import user11681.anvilevents.event.entity.living.LivingDropExperienceEvent;
@@ -37,6 +38,13 @@ public class Main implements CommonEventInitializer {
         return Arrays.asList(
                 BlockDropEvent.class,
 
+                EnderTeleportEvent.class,
+                EntityDamageEvent.Pre.class,
+                EntityDamageEvent.Post.class,
+                EntityLandEvent.class,
+                EntityTickEvent.Pre.class,
+                EntityTickEvent.Post.class,
+
                 LivingCollisionEvent.class,
                 LivingDeathEvent.class,
                 LivingDropExperienceEvent.class,
@@ -54,11 +62,6 @@ public class Main implements CommonEventInitializer {
                 PlayerTickEvent.Pre.class,
                 PlayerTickEvent.Post.class,
                 UseBlockEvent.class,
-
-                EnderTeleportEvent.class,
-                EntityDamageEvent.Pre.class,
-                EntityDamageEvent.Post.class,
-                EntityLandEvent.class,
 
                 TranslationEvent.class,
 

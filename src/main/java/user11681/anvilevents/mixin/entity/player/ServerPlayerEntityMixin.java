@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.Anvil;
 import user11681.anvilevents.event.entity.player.PlayerCopyEvent;
 
 @Mixin(ServerPlayerEntity.class)
@@ -20,7 +19,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntityMixin {
     @Inject(method = "copyFrom(Lnet/minecraft/server/network/ServerPlayerEntity;Z)V", at = @At("HEAD"), cancellable = true)
     protected void onCopyFrom(final ServerPlayerEntity oldPlayer, final boolean alive, final CallbackInfo info) {
         if (this.copy) {
-            final PlayerCopyEvent event = Anvil.fire(new PlayerCopyEvent(thiz(), oldPlayer, alive));
+            final PlayerCopyEvent event = new PlayerCopyEvent(thiz, oldPlayer, alive).fire();
 
             if (!event.isFail()) {
                 this.copy = false;

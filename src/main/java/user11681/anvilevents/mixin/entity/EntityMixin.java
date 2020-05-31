@@ -3,7 +3,6 @@ package user11681.anvilevents.mixin.entity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
@@ -13,11 +12,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.Anvil;
 import user11681.anvilevents.duck.entity.EntityDuck;
 import user11681.anvilevents.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
+import user11681.anvilevents.event.entity.EntityTickEvent;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityDuck {
@@ -32,14 +31,16 @@ public abstract class EntityMixin implements EntityDuck {
         return false;
     }
 
+    protected final Entity thiz = (Entity) (Object) this;
+
     protected boolean damage = true;
     protected boolean teleport = true;
 
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("HEAD"), cancellable = true)
     protected void preDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
         if (this.damage) {
-            final Entity thiz = thiz();
-            final EntityDamageEvent event = Anvil.fire(new EntityDamageEvent.Pre(thiz, source, damage));
+            final Entity thiz = this.thiz;
+            final EntityDamageEvent event = new EntityDamageEvent.Pre(thiz, source, damage).fire();
 
             if (event.isFail()) {
                 info.setReturnValue(false);
@@ -61,16 +62,16 @@ public abstract class EntityMixin implements EntityDuck {
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("RETURN"))
     protected void postDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
         if (info.getReturnValue()) {
-            Anvil.fire(new EntityDamageEvent.Post(thiz(), source, damage));
+            new EntityDamageEvent.Post(thiz, source, damage).fire();
         }
     }
 
     @Inject(method = "requestTeleport(DDD)V", at = @At(value = "JUMP", opcode = Opcodes.INSTANCEOF, ordinal = 0), cancellable = true)
     protected void onRequestTeleport(final double x, final double y, final double z, final CallbackInfo info) {
         if (this.teleport) {
-            final EnderTeleportEvent event = Anvil.fire(new EnderTeleportEvent(thiz(), x, y, z));
+            final EnderTeleportEvent event = new EnderTeleportEvent(thiz, x, y, z).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (!event.isFail()) {
                 this.teleport = false;
                 event.getEntity().requestTeleport(event.getX(), event.getY(), event.getZ());
                 this.teleport = true;
@@ -80,8 +81,15 @@ public abstract class EntityMixin implements EntityDuck {
         }
     }
 
-    private Entity thiz() {
-        //noinspection ConstantConditions
-        return (Entity) (Object) this;
+    @Inject(method = "tick()V", at = @At("HEAD"), cancellable = true)
+    protected void preTick(final CallbackInfo info) {
+        if (new EntityTickEvent.Pre(thiz).fire().isFail()) {
+            info.cancel();
+        }
+    }
+
+    @Inject(method = "tick()V", at = @At("RETURN"))
+    protected void postTick(final CallbackInfo info) {
+        new EntityTickEvent.Post(thiz).fire();
     }
 }

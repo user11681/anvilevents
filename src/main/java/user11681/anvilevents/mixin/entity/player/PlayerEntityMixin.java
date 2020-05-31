@@ -6,7 +6,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvil.Anvil;
 import user11681.anvilevents.duck.entity.player.PlayerInventoryDuck;
 import user11681.anvilevents.event.entity.player.PlayerDropInventoryEvent;
 import user11681.anvilevents.event.entity.player.PlayerTickEvent;
@@ -17,12 +16,14 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin {
     @Shadow
     protected abstract void dropInventory();
 
+    protected final PlayerEntity thiz = (PlayerEntity) (Object) this;
+
     protected boolean drop = true;
 
     @Inject(method = "dropInventory()V", at = @At("HEAD"), cancellable = true)
     protected void onDropInventroy(final CallbackInfo info) {
         if (this.drop) {
-            final PlayerDropInventoryEvent event = Anvil.fire(new PlayerDropInventoryEvent(thiz(), ((PlayerInventoryDuck) thiz().inventory).getCombinedInventory()));
+            final PlayerDropInventoryEvent event = new PlayerDropInventoryEvent(thiz, ((PlayerInventoryDuck) thiz.inventory).getCombinedInventory()).fire();
 
             if (!event.isFail()) {
                 this.drop = false;
@@ -36,18 +37,16 @@ public abstract class PlayerEntityMixin extends LivingEntityMixin {
     }
 
     @Override
-    @Inject(method = "tick()V", at = @At("HEAD"))
+    @Inject(method = "tick()V", at = @At("HEAD"), cancellable = true)
     protected void preTick(final CallbackInfo info) {
-        Anvil.fire(new PlayerTickEvent.Pre(thiz()));
+        if (new PlayerTickEvent.Pre(thiz).fire().isFail()) {
+            info.cancel();
+        }
     }
 
     @Override
     @Inject(method = "tick()V", at = @At("RETURN"))
     protected void postTick(final CallbackInfo info) {
-        Anvil.fire(new PlayerTickEvent.Post(thiz()));
-    }
-
-    protected PlayerEntity thiz() {
-        return (PlayerEntity) (Object) this;
+        new PlayerTickEvent.Post(thiz).fire();
     }
 }

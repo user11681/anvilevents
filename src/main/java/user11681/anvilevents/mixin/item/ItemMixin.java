@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvil.Anvil;
 import user11681.anvilevents.event.item.UseItemEvent;
 
 @Mixin(Item.class)
@@ -21,7 +20,7 @@ public abstract class ItemMixin {
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     protected void onUse(final World world, final PlayerEntity user, final Hand hand, final CallbackInfoReturnable<TypedActionResult<ItemStack>> info) {
         if (this.use) {
-            final UseItemEvent event = Anvil.fire(new UseItemEvent(user.getStackInHand(hand), world, user, hand));
+            final UseItemEvent event = new UseItemEvent(user.getStackInHand(hand), world, user, hand).fire();
             final ActionResult result = event.getResult();
             final ItemStack itemStack = event.getItemStack();
 
