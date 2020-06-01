@@ -38,7 +38,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     @Override
     public boolean superFall(final float distance, final float damageMultiplier) {
-        return super.handleFallDamage(distance, damageMultiplier);
+        return super.thiz.handleFallDamage(distance, damageMultiplier);
     }
 
     @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
