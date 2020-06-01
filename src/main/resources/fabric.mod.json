@@ -19,9 +19,6 @@
         ],
         "anvilClientEvents": [
             "user11681.anvilevents.Client"
-        ],
-        "anvilCommonListeners": [
-            "user11681.anvilevents.Listeners"
         ]
     },
     "mixins": [
