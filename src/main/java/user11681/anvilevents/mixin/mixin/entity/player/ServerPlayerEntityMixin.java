@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.entity.player;
+package user11681.anvilevents.mixin.mixin.entity.player;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.block;
+package user11681.anvilevents.mixin.mixin.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

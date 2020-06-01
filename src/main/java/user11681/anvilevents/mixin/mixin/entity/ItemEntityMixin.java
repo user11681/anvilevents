@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.entity;
+package user11681.anvilevents.mixin.mixin.entity;
 
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;

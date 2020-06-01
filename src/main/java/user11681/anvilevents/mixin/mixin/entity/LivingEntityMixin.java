@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.entity;
+package user11681.anvilevents.mixin.mixin.entity;
 
 import java.util.List;
 import net.minecraft.entity.Entity;
@@ -11,12 +11,14 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import user11681.anvilevents.duck.entity.LivingEntityDuck;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import user11681.anvilevents.mixin.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.living.LivingCollisionEvent;
 import user11681.anvilevents.event.entity.living.LivingDeathEvent;
 import user11681.anvilevents.event.entity.living.LivingDropExperienceEvent;
 import user11681.anvilevents.event.entity.living.LivingKnockbackEvent;
 import user11681.anvilevents.event.entity.living.LivingTickEvent;
+import user11681.anvilevents.mixin.Store;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityDuck {
@@ -32,6 +34,11 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
     @Override
     public boolean superDamage(final DamageSource source, final float damage) {
         return super.damage(source, damage);
+    }
+
+    @Override
+    public boolean superFall(final float distance, final float damageMultiplier) {
+        return super.handleFallDamage(distance, damageMultiplier);
     }
 
     @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
@@ -77,6 +84,13 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
             }
 
             info.cancel();
+        }
+    }
+
+    @Inject(method = "handleFallDamage(FF)Z", at = @At("HEAD"), cancellable = true)
+    protected void onHandleFallDamage(final float distance, final float damageMultiplier, final CallbackInfoReturnable<Boolean> info) {
+        if (Store.fall) {
+            super.onHandleFallDamage(distance, damageMultiplier, info);
         }
     }
 

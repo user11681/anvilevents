@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.i18n;
+package user11681.anvilevents.mixin.mixin.i18n;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

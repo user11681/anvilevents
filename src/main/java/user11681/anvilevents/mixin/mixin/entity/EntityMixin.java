@@ -1,9 +1,8 @@
-package user11681.anvilevents.mixin.entity;
+package user11681.anvilevents.mixin.mixin.entity;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,11 +11,13 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import user11681.anvilevents.duck.entity.EntityDuck;
-import user11681.anvilevents.duck.entity.LivingEntityDuck;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
+import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.EntityTickEvent;
+import user11681.anvilevents.mixin.Store;
+import user11681.anvilevents.mixin.duck.entity.EntityDuck;
+import user11681.anvilevents.mixin.duck.entity.LivingEntityDuck;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityDuck {
@@ -24,21 +25,23 @@ public abstract class EntityMixin implements EntityDuck {
     public World world;
 
     @Shadow
-    public abstract Box getBoundingBox();
+    public boolean damage(final DamageSource source, final float amount) {
+        return false;
+    }
 
     @Shadow
-    public boolean damage(final DamageSource source, final float amount) {
+    public boolean handleFallDamage(final float fallDistance, final float damageMultiplier) {
         return false;
     }
 
     protected final Entity thiz = (Entity) (Object) this;
 
-    protected boolean damage = true;
-    protected boolean teleport = true;
+    private static boolean onDamage = true;
+    private static boolean teleport = true;
 
     @Inject(method = "damage(Lnet/minecraft/entity/damage/DamageSource;F)Z", at = @At("HEAD"), cancellable = true)
     protected void preDamage(final DamageSource source, final float damage, final CallbackInfoReturnable<Boolean> info) {
-        if (this.damage) {
+        if (onDamage) {
             final Entity thiz = this.thiz;
             final EntityDamageEvent event = new EntityDamageEvent.Pre(thiz, source, damage).fire();
 
@@ -46,7 +49,7 @@ public abstract class EntityMixin implements EntityDuck {
                 info.setReturnValue(false);
             } else {
                 final Entity entity = event.getEntity();
-                this.damage = false;
+                onDamage = false;
 
                 if (entity instanceof LivingEntity) {
                     info.setReturnValue(((LivingEntityDuck) entity).superDamage(event.getSource(), event.getDamage()) && thiz == entity || event.isAccepted());
@@ -54,7 +57,7 @@ public abstract class EntityMixin implements EntityDuck {
                     info.setReturnValue(entity.damage(event.getSource(), event.getDamage()) && thiz == entity || event.isAccepted());
                 }
 
-                this.damage = true;
+                onDamage = true;
             }
         }
     }
@@ -66,15 +69,35 @@ public abstract class EntityMixin implements EntityDuck {
         }
     }
 
+    @Inject(method = "handleFallDamage(FF)Z", at = @At("HEAD"), cancellable = true)
+    protected void onHandleFallDamage(final float distance, final float damageMultiplier, final CallbackInfoReturnable<Boolean> info) {
+        if (Store.fall) {
+            final EntityLandEvent event = new EntityLandEvent(thiz, distance, damageMultiplier).fire();
+
+            if (!event.isFail()) {
+                Store.fall = false;
+
+                if (thiz instanceof LivingEntity) {
+                    ((LivingEntityDuck) thiz).superFall(distance, damageMultiplier);
+                } else {
+                    event.getEntity().handleFallDamage(event.getDistance(), event.getDamageMultiplier());
+                }
+                Store.fall = true;
+            }
+
+            info.cancel();
+        }
+    }
+
     @Inject(method = "requestTeleport(DDD)V", at = @At(value = "JUMP", opcode = Opcodes.INSTANCEOF, ordinal = 0), cancellable = true)
     protected void onRequestTeleport(final double x, final double y, final double z, final CallbackInfo info) {
-        if (this.teleport) {
+        if (teleport) {
             final EnderTeleportEvent event = new EnderTeleportEvent(thiz, x, y, z).fire();
 
             if (!event.isFail()) {
-                this.teleport = false;
+                teleport = false;
                 event.getEntity().requestTeleport(event.getX(), event.getY(), event.getZ());
-                this.teleport = true;
+                teleport = true;
             }
 
             info.cancel();

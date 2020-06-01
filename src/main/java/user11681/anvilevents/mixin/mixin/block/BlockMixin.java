@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.block;
+package user11681.anvilevents.mixin.mixin.block;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,17 +9,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvilevents.event.block.BlockDropEvent;
-import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.player.BlockBreakSpeedEvent;
 
 @Mixin(Block.class)
@@ -28,7 +24,6 @@ public abstract class BlockMixin {
 
     protected final Block thiz = (Block) (Object) this;
 
-    protected boolean land = true;
     protected boolean delta = true;
 
     @Inject(method = "getDroppedStacks(Lnet/minecraft/block/BlockState;Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/entity/BlockEntity;)Ljava/util/List;",
@@ -66,21 +61,6 @@ public abstract class BlockMixin {
             }
 
             event = null;
-        }
-    }
-
-    @Inject(method = "onLandedUpon(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/entity/Entity;F)V", at = @At("HEAD"), cancellable = true)
-    protected void onOnLandedUpon(final World world, final BlockPos position, final Entity entity, final float distance, final CallbackInfo info) {
-        if (this.land) {
-            final EntityLandEvent event = new EntityLandEvent(entity, thiz, world, position, distance).fire();
-
-            if (event.getResult() != ActionResult.FAIL) {
-                this.land = false;
-                event.getBlock().onLandedUpon(event.getWorld(), event.getPosition(), event.getEntity(), event.getDistance());
-                this.land = true;
-            }
-
-            info.cancel();
         }
     }
 

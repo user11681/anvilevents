@@ -1,4 +1,4 @@
-package user11681.anvilevents.duck.entity.player;
+package user11681.anvilevents.mixin.duck.entity.player;
 
 import java.util.List;
 import net.minecraft.item.ItemStack;

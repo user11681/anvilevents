@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.item;
+package user11681.anvilevents.mixin.mixin.item;
 
 import java.util.ArrayList;
 import java.util.List;

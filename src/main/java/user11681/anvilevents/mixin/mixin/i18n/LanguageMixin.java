@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.i18n;
+package user11681.anvilevents.mixin.mixin.i18n;
 
 import net.minecraft.util.Language;
 import org.spongepowered.asm.mixin.Mixin;

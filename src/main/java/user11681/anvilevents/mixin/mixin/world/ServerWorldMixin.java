@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.world;
+package user11681.anvilevents.mixin.mixin.world;
 
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;

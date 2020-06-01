@@ -1,4 +1,4 @@
-package user11681.anvilevents.mixin.client;
+package user11681.anvilevents.mixin.mixin.client;
 
 import java.util.HashMap;
 import java.util.Map;
