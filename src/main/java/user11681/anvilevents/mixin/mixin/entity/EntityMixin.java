@@ -16,11 +16,10 @@ import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.EntityTickEvent;
 import user11681.anvilevents.mixin.Store;
-import user11681.anvilevents.mixin.duck.entity.EntityDuck;
 import user11681.anvilevents.mixin.duck.entity.LivingEntityDuck;
 
 @Mixin(Entity.class)
-public abstract class EntityMixin implements EntityDuck {
+public abstract class EntityMixin {
     @Shadow
     public World world;
 

@@ -13,17 +13,19 @@ import user11681.anvilevents.event.client.gui.RenderTooltipEvent;
 @Environment(EnvType.CLIENT)
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
-    protected boolean available = true;
+    protected final Screen thiz = (Screen) (Object) this;
+
+    private static boolean available = true;
 
     @Inject(method = "renderTooltip(Ljava/util/List;II)V", at = @At("HEAD"), cancellable = true)
     protected void preRenderTooltip(final List<String> tooltip, final int x, final int y, final CallbackInfo info) {
-        if (this.available) {
-            final RenderTooltipEvent event = new RenderTooltipEvent.Pre(thiz(), tooltip, x, y).fire();
+        if (available) {
+            final RenderTooltipEvent event = new RenderTooltipEvent.Pre(thiz, tooltip, x, y).fire();
 
             if (!event.isFail()) {
-                this.available = false;
+                available = false;
                 event.getScreen().renderTooltip(event.getTooltip(), event.getX(), event.getY());
-                this.available = true;
+                available = true;
             }
 
             info.cancel();
@@ -32,10 +34,6 @@ public abstract class ScreenMixin {
 
     @Inject(method = "renderTooltip(Ljava/util/List;II)V", at = @At("RETURN"))
     protected void postRenderTooltip(final List<String> tooltip, final int x, final int y, final CallbackInfo info) {
-        new RenderTooltipEvent.Post(thiz(), tooltip, x, y).fire();
-    }
-
-    protected Screen thiz() {
-        return (Screen) (Object) this;
+        new RenderTooltipEvent.Post(thiz, tooltip, x, y).fire();
     }
 }
