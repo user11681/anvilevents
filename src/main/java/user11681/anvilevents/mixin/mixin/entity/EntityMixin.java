@@ -75,12 +75,7 @@ public abstract class EntityMixin {
 
             if (!event.isFail()) {
                 Store.fall = false;
-
-                if (thiz instanceof LivingEntity) {
-                    ((LivingEntityDuck) thiz).superFall(distance, damageMultiplier);
-                } else {
-                    event.getEntity().handleFallDamage(event.getDistance(), event.getDamageMultiplier());
-                }
+                event.getEntity().handleFallDamage(event.getDistance(), event.getDamageMultiplier());
                 Store.fall = true;
             }
 
