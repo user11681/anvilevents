@@ -22,6 +22,7 @@ import user11681.anvilevents.event.client.gui.hud.RenderStatusBarsEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderStatusEffectsEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderTextBackgroundEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderVignetteEvent;
+import user11681.anvilevents.event.client.gui.screen.RenderStackTooltipEvent;
 import user11681.anvilevents.event.client.mouse.CursorPosEvent;
 import user11681.anvilevents.event.client.mouse.MouseButtonEvent;
 import user11681.anvilevents.event.client.mouse.MouseScrollEvent;
@@ -48,6 +49,8 @@ public class Client implements ClientEventInitializer {
 
                 RenderTooltipEvent.Pre.class,
                 RenderTooltipEvent.Post.class,
+                RenderStackTooltipEvent.Pre.class,
+                RenderStackTooltipEvent.Post.class,
 
                 ItemTooltipEvent.class,
 
