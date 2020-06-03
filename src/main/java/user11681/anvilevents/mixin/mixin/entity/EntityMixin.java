@@ -28,11 +28,6 @@ public abstract class EntityMixin {
         return false;
     }
 
-    @Shadow
-    public boolean handleFallDamage(final float fallDistance, final float damageMultiplier) {
-        return false;
-    }
-
     protected final Entity thiz = (Entity) (Object) this;
 
     private static boolean onDamage = true;
@@ -72,14 +67,17 @@ public abstract class EntityMixin {
     protected void onHandleFallDamage(final float distance, final float damageMultiplier, final CallbackInfoReturnable<Boolean> info) {
         if (Store.fall) {
             final EntityLandEvent event = new EntityLandEvent(thiz, distance, damageMultiplier).fire();
+            final Entity entity = event.getEntity();
 
-            if (!event.isFail()) {
-                Store.fall = false;
-                event.getEntity().handleFallDamage(event.getDistance(), event.getDamageMultiplier());
-                Store.fall = true;
+            if (!(entity instanceof LivingEntity)) {
+                if (!event.isFail()) {
+                    Store.fall = false;
+                    entity.handleFallDamage(event.getDistance(), event.getDamageMultiplier());
+                    Store.fall = true;
+                }
+
+                info.cancel();
             }
-
-            info.cancel();
         }
     }
 

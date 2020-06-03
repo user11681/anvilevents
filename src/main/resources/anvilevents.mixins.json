@@ -20,6 +20,7 @@
         "client.MinecraftClientMixin",
         "client.MouseMixin",
         "client.ScreenMixin",
+        "client.resource.ResourceReloaderMixin",
         "i18n.I18nMixin",
         "item.ItemStackMixin"
     ],

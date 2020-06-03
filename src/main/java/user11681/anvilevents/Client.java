@@ -6,6 +6,7 @@ import user11681.anvil.entrypoint.ClientEventInitializer;
 import user11681.anvil.event.Event;
 import user11681.anvilevents.event.client.ClientTickEvent;
 import user11681.anvilevents.event.client.ItemTooltipEvent;
+import user11681.anvilevents.event.client.LoadResourcesEvent;
 import user11681.anvilevents.event.client.gui.RenderTooltipEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderCrosshairEvent;
 import user11681.anvilevents.event.client.gui.hud.RenderExperienceBarEvent;
@@ -59,7 +60,9 @@ public class Client implements ClientEventInitializer {
                 MouseScrollEvent.class,
 
                 ClientTickEvent.Pre.class,
-                ClientTickEvent.Post.class
+                ClientTickEvent.Post.class,
+
+                LoadResourcesEvent.class
         );
     }
 }
