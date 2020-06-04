@@ -18,6 +18,6 @@ public class ResourceReloaderMixin {
     @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "method_18366(Ljava/util/List;)Lnet/minecraft/util/Unit;", at = @At(value = "RETURN"))
     private static void onReloadResources(final List<ResourcePack> resourcePacks, final CallbackInfoReturnable<Unit> info) {
-        new LoadResourcesEvent.Reload().fire();
+        new LoadResourcesEvent.Launch().fire();
     }
 }
