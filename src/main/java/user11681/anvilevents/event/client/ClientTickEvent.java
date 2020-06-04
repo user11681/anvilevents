@@ -3,10 +3,10 @@ package user11681.anvilevents.event.client;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 
 @Environment(EnvType.CLIENT)
-public abstract class ClientTickEvent extends Event {
+public abstract class ClientTickEvent extends AnvilEvent {
     protected final MinecraftClient client;
 
     public ClientTickEvent(final MinecraftClient client) {

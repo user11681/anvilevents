@@ -3,10 +3,10 @@ package user11681.anvilevents.event.client.mouse;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Mouse;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 
 @Environment(EnvType.CLIENT)
-public abstract class MouseEvent extends Event {
+public abstract class MouseEvent extends AnvilEvent {
     protected final Mouse mouse;
 
     protected long window;

@@ -1,9 +1,9 @@
 package user11681.anvilevents.event.client.gui.screen;
 
 import net.minecraft.client.gui.screen.Screen;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 
-public abstract class ScreenRenderEvent extends Event {
+public abstract class ScreenRenderEvent extends AnvilEvent {
     protected Screen screen;
     protected int x;
     protected int y;

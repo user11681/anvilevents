@@ -6,22 +6,22 @@ import java.util.List;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Language;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 
 /**
  * This event is called when {@link I18n#translate} and {@link Language#translate} are called.
  * It allows listeners to modify translation key, arguments and return value of the method call.
  *
- * A {@link ActionResult#SUCCESS} {@link Event#result} sets the return value to {@link TranslationEvent#value}
+ * A {@link ActionResult#SUCCESS} {@link AnvilEvent#result} sets the return value to {@link TranslationEvent#value}
  * and cancels further processing.
- * A {@link ActionResult#CONSUME} {@link Event#result} sets the return value to {@link TranslationEvent#value}
+ * A {@link ActionResult#CONSUME} {@link AnvilEvent#result} sets the return value to {@link TranslationEvent#value}
  * and does not cancel further processing.
- * A {@link ActionResult#PASS} {@link Event#result} translates the new key and arguments
+ * A {@link ActionResult#PASS} {@link AnvilEvent#result} translates the new key and arguments
  * and does not cancel further processing.
- * A {@link ActionResult#FAIL} {@link Event#result} sets the return value to {@link TranslationEvent#key}
+ * A {@link ActionResult#FAIL} {@link AnvilEvent#result} sets the return value to {@link TranslationEvent#key}
  * and cancels further processing.
  */
-public class TranslationEvent extends Event {
+public class TranslationEvent extends AnvilEvent {
     protected String value;
     protected String key;
     protected List<Object> args;

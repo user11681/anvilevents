@@ -1,9 +1,9 @@
 package user11681.anvilevents.event.block;
 
 import net.minecraft.block.BlockState;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 
-public abstract class BlockEvent extends Event {
+public abstract class BlockEvent extends AnvilEvent {
     protected BlockState state;
 
     public BlockEvent(final BlockState state) {

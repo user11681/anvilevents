@@ -3,7 +3,7 @@ package user11681.anvilevents;
 import java.util.Arrays;
 import java.util.Collection;
 import user11681.anvil.entrypoint.ClientEventInitializer;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 import user11681.anvilevents.event.client.ClientTickEvent;
 import user11681.anvilevents.event.client.ItemTooltipEvent;
 import user11681.anvilevents.event.client.LoadResourcesEvent;
@@ -30,14 +30,13 @@ import user11681.anvilevents.event.client.mouse.MouseScrollEvent;
 
 public class Client implements ClientEventInitializer {
     @Override
-    public Collection<Class<? extends Event>> get() {
+    public Collection<Class<? extends AnvilEvent>> get() {
         return Arrays.asList(
                 RenderCrosshairEvent.class,
                 RenderExperienceBarEvent.class,
                 RenderHeldTooltipEvent.class,
                 RenderHotbarEvent.class,
                 RenderHotbarItemEvent.class,
-                RenderHudEvent.class,
                 RenderJumpBarEvent.class,
                 RenderMountHealthEvent.class,
                 RenderPortalOverlayEvent.class,
@@ -47,6 +46,8 @@ public class Client implements ClientEventInitializer {
                 RenderStatusEffectsEvent.class,
                 RenderTextBackgroundEvent.class,
                 RenderVignetteEvent.class,
+
+                RenderHudEvent.class,
 
                 RenderTooltipEvent.Pre.class,
                 RenderTooltipEvent.Post.class,

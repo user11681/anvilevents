@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import user11681.anvil.entrypoint.CommonEventInitializer;
-import user11681.anvil.event.Event;
+import user11681.anvil.event.AnvilEvent;
 import user11681.anvilevents.event.block.BlockDropEvent;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
@@ -34,7 +34,7 @@ public class Main implements CommonEventInitializer {
     public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
     @Override
-    public Collection<Class<? extends Event>> get() {
+    public Collection<Class<? extends AnvilEvent>> get() {
         return Arrays.asList(
                 BlockDropEvent.class,
 
