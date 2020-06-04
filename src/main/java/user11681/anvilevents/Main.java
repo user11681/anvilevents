@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import user11681.anvil.entrypoint.CommonEventInitializer;
 import user11681.anvil.event.AnvilEvent;
 import user11681.anvilevents.event.block.BlockDropEvent;
+import user11681.anvilevents.event.client.LoadResourcesEvent;
 import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
@@ -65,7 +66,9 @@ public class Main implements CommonEventInitializer {
 
                 TranslationEvent.class,
 
-                UseItemEvent.class
+                UseItemEvent.class,
+
+                LoadResourcesEvent.Launch.class
         );
     }
 }
