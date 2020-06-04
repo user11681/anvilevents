@@ -33,6 +33,6 @@ public abstract class MinecraftClientMixin {
     @SuppressWarnings("UnresolvedMixinReference")
     @Inject(method = "method_18503(Ljava/util/List;Ljava/util/concurrent/CompletableFuture;)V", at = @At(value = "INVOKE", target = "Ljava/util/concurrent/CompletableFuture;complete(Ljava/lang/Object;)Z"))
     protected void onReload(final List<ResourcePack> resourcePacks, final CompletableFuture<?> future, final CallbackInfo info) {
-        new LoadResourcesEvent().fire();
+        new LoadResourcesEvent.Launch().fire();
     }
 }

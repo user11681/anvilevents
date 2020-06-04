@@ -5,5 +5,7 @@ import net.fabricmc.api.Environment;
 import user11681.anvil.event.AnvilEvent;
 
 @Environment(EnvType.CLIENT)
-public class LoadResourcesEvent extends AnvilEvent {
+public abstract class LoadResourcesEvent extends AnvilEvent {
+    public static class Launch extends LoadResourcesEvent {}
+    public static class Reload extends LoadResourcesEvent {}
 }

@@ -63,7 +63,8 @@ public class Client implements ClientEventInitializer {
                 ClientTickEvent.Pre.class,
                 ClientTickEvent.Post.class,
 
-                LoadResourcesEvent.class
+                LoadResourcesEvent.Launch.class,
+                LoadResourcesEvent.Reload.class
         );
     }
 }
