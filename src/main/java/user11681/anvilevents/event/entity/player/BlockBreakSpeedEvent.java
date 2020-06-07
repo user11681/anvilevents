@@ -1,5 +1,6 @@
 package user11681.anvilevents.event.entity.player;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,12 +11,12 @@ import user11681.anvilevents.event.block.BlockEvent;
 public class BlockBreakSpeedEvent extends BlockEvent {
     protected final BlockView world;
 
-    protected Block block;
+    protected AbstractBlock block;
     protected PlayerEntity player;
     protected BlockPos blockPos;
     protected float speed;
 
-    public BlockBreakSpeedEvent(final Block block, final BlockState state, final PlayerEntity player, final BlockView world, final BlockPos blockPos, final float speed) {
+    public BlockBreakSpeedEvent(final AbstractBlock block, final BlockState state, final PlayerEntity player, final BlockView world, final BlockPos blockPos, final float speed) {
         super(state);
 
         this.world = world;
@@ -29,7 +30,7 @@ public class BlockBreakSpeedEvent extends BlockEvent {
         return this.world;
     }
 
-    public Block getBlock() {
+    public AbstractBlock getBlock() {
         return this.block;
     }
 

@@ -1,5 +1,6 @@
 package user11681.anvilevents.mixin.mixin.block;
 
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -12,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvilevents.event.entity.player.UseBlockEvent;
 
-@Mixin(BlockState.class)
+@Mixin(AbstractBlock.AbstractBlockState.class)
 public abstract class BlockStateMixin {
     protected boolean use = true;
 

@@ -9,18 +9,20 @@ import net.minecraft.client.gui.hud.InGameHud;
 public class RenderTextBackgroundEvent extends RenderHudElementEvent {
     protected TextRenderer renderer;
     protected int y;
-    protected int width;
+    protected int x;
+    protected int color;
 
-    public RenderTextBackgroundEvent(final InGameHud hud, final TextRenderer renderer, final int y, final int width) {
+    public RenderTextBackgroundEvent(final InGameHud hud, final TextRenderer renderer, final int y, final int x, final int color) {
         super(hud, Element.TEXT_BACKGROUND);
 
         this.renderer = renderer;
         this.y = y;
-        this.width = width;
+        this.x = x;
+        this.color = color;
     }
 
     public TextRenderer getRenderer() {
-        return renderer;
+        return this.renderer;
     }
 
     public void setRenderer(final TextRenderer renderer) {
@@ -28,18 +30,26 @@ public class RenderTextBackgroundEvent extends RenderHudElementEvent {
     }
 
     public int getY() {
-        return y;
+        return this.y;
     }
 
     public void setY(final int y) {
         this.y = y;
     }
 
-    public int getWidth() {
-        return width;
+    public int getX() {
+        return this.x;
     }
 
-    public void setWidth(final int width) {
-        this.width = width;
+    public void setX(final int x) {
+        this.x = x;
+    }
+
+    public int getColor() {
+        return this.color;
+    }
+
+    public void setColor(final int color) {
+        this.color = color;
     }
 }

@@ -3,6 +3,7 @@
     "package": "user11681.anvilevents.mixin.mixin",
     "compatibilityLevel": "JAVA_8",
     "mixins": [
+        "block.AbstractBlockMixin",
         "block.BlockMixin",
         "block.BlockStateMixin",
         "entity.EntityMixin",
@@ -11,7 +12,8 @@
         "entity.player.PlayerEntityMixin",
         "entity.player.PlayerInventoryMixin",
         "entity.player.ServerPlayerEntityMixin",
-        "i18n.LanguageMixin",
+        "i18n.LanguageInstanceMixin",
+        "i18n.TranslationStorageMixin",
         "item.ItemMixin",
         "world.ServerWorldMixin"
     ],

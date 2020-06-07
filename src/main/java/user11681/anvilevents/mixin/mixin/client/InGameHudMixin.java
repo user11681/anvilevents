@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -38,16 +39,16 @@ public abstract class InGameHudMixin {
     protected abstract void renderVignetteOverlay(Entity entity);
 
     @Shadow
-    protected abstract void drawTextBackground(TextRenderer textRenderer, int y, int width);
+    protected abstract void drawTextBackground(MatrixStack matrices, TextRenderer textRenderer, int y, int x, int color);
 
     @Shadow
-    public abstract void renderMountJumpBar(int x);
+    public abstract void renderMountJumpBar(MatrixStack matrices, int x);
 
     @Shadow
-    public abstract void renderExperienceBar(int x);
+    public abstract void renderExperienceBar(MatrixStack matrices, int x);
 
     @Shadow
-    protected abstract void renderScoreboardSidebar(ScoreboardObjective scoreboardObjective);
+    protected abstract void renderScoreboardSidebar(MatrixStack matrices, ScoreboardObjective scoreboardObjective);
 
     @Shadow
     protected abstract void renderPortalOverlay(float nauseaStrength);
@@ -59,7 +60,7 @@ public abstract class InGameHudMixin {
     protected final Map<String, Boolean> available = new HashMap<>();
 
     @Inject(method = "render", at = @At("HEAD"), cancellable = true)
-    private void render(final float tickDelta, final CallbackInfo info) {
+    private void render(final MatrixStack matrices, final float tickDelta, final CallbackInfo info) {
         if (new RenderHudEvent(thiz, tickDelta).fire().isFail()) {
             info.cancel();
         }
@@ -73,7 +74,7 @@ public abstract class InGameHudMixin {
     }
 
     @Inject(method = "renderExperienceBar", at = @At(value = "HEAD"), cancellable = true)
-    private void onRenderExperienceBar(final int x, final CallbackInfo info) {
+    private void onRenderExperienceBar(final MatrixStack matrices, final int x, final CallbackInfo info) {
         final Map<String, Boolean> available = this.available;
         final String name = "renderExperienceBar";
 
@@ -86,7 +87,7 @@ public abstract class InGameHudMixin {
 
             if (!event.isFail()) {
                 available.put(name, false);
-                this.renderExperienceBar(event.getX());
+                this.renderExperienceBar(matrices, event.getX());
                 available.put(name, true);
             }
 
@@ -102,7 +103,7 @@ public abstract class InGameHudMixin {
     }
 
     @Inject(method = "renderHotbar", at = @At("HEAD"), cancellable = true)
-    private void onRenderHotbar(final float tickDelta, final CallbackInfo info) {
+    private void onRenderHotbar(final float tickDelta, final MatrixStack matrixStack, final CallbackInfo info) {
         if (new RenderHotbarEvent(thiz, tickDelta).fire().isFail()) {
             info.cancel();
         }
@@ -138,7 +139,7 @@ public abstract class InGameHudMixin {
     }
 
     @Inject(method = "renderMountJumpBar", at = @At(value = "HEAD"), cancellable = true)
-    private void onRenderMountJumpBar(final int x, final CallbackInfo info) {
+    private void onRenderMountJumpBar(final MatrixStack matrices, final int x, final CallbackInfo info) {
         final Map<String, Boolean> available = this.available;
         final String name = "renderMountJumpBar";
 
@@ -151,7 +152,7 @@ public abstract class InGameHudMixin {
 
             if (!event.isFail()) {
                 available.put(name, false);
-                this.renderMountJumpBar(event.getX());
+                this.renderMountJumpBar(matrices, event.getX());
                 available.put(name, true);
             }
 
@@ -189,7 +190,7 @@ public abstract class InGameHudMixin {
     }
 
     @Inject(method = "renderScoreboardSidebar", at = @At("HEAD"), cancellable = true)
-    private void onRenderScoreboardSidebar(final ScoreboardObjective objective, final CallbackInfo info) {
+    private void onRenderScoreboardSidebar(final MatrixStack matrices, final ScoreboardObjective objective, final CallbackInfo info) {
         final Map<String, Boolean> available = this.available;
         final String name = "renderScoreboardSidebar";
 
@@ -202,7 +203,7 @@ public abstract class InGameHudMixin {
 
             if (!event.isFail()) {
                 available.put(name, false);
-                this.renderScoreboardSidebar(event.getObjective());
+                this.renderScoreboardSidebar(matrices, event.getObjective());
                 available.put(name, true);
             }
 
@@ -225,8 +226,7 @@ public abstract class InGameHudMixin {
     }
 
     @Inject(method = "drawTextBackground", at = @At(value = "HEAD"), cancellable = true)
-    private void onDrawTextBackground(final TextRenderer renderer, final int y, final int width,
-                                      final CallbackInfo info) {
+    private void onDrawTextBackground(final MatrixStack matrices, final TextRenderer textRenderer, final int y, final int x, final int color, final CallbackInfo info) {
         final Map<String, Boolean> available = this.available;
         final String name = "drawTextBackground";
 
@@ -235,11 +235,11 @@ public abstract class InGameHudMixin {
         }
 
         if (available.get(name)) {
-            final RenderTextBackgroundEvent event = new RenderTextBackgroundEvent(thiz, renderer, y, width).fire();
+            final RenderTextBackgroundEvent event = new RenderTextBackgroundEvent(thiz, textRenderer, y, x, color).fire();
 
             if (!event.isFail()) {
                 available.put(name, false);
-                this.drawTextBackground(event.getRenderer(), event.getY(), event.getWidth());
+                this.drawTextBackground(matrices, event.getRenderer(), event.getY(), event.getX(), event.getColor());
                 available.put(name, true);
             }
 

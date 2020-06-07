@@ -36,14 +36,14 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         return super.damage(source, damage);
     }
 
-    @Inject(method = "takeKnockback(Lnet/minecraft/entity/Entity;FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
-    private void onTakeKnockback(final Entity attacker, final float speed, final double x, final double z, final CallbackInfo info) {
+    @Inject(method = "takeKnockback(FDD)V", at = @At(value = "JUMP", opcode = Opcodes.IFEQ, ordinal = 0), cancellable = true)
+    private void onTakeKnockback(final float speed, final double x, final double z, final CallbackInfo info) {
         if (this.knockback) {
-            final LivingKnockbackEvent event = new LivingKnockbackEvent(thiz, attacker, speed, x, z).fire();
+            final LivingKnockbackEvent event = new LivingKnockbackEvent(thiz, speed, x, z).fire();
 
             if (event.getResult() != ActionResult.FAIL) {
                 this.knockback = false;
-                event.getEntity().takeKnockback(event.getAttacker(), event.getSpeed(), event.getX(), event.getZ());
+                event.getEntity().takeKnockback(event.getSpeed(), event.getX(), event.getZ());
                 this.knockback = true;
             }
 

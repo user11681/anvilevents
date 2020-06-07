@@ -3,7 +3,7 @@ package user11681.anvilevents.event.entity.player;
 import java.util.List;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DefaultedList;
+import net.minecraft.util.collection.DefaultedList;
 
 public class PlayerDropInventoryEvent extends PlayerEvent {
     protected final List<DefaultedList<ItemStack>> drops;
