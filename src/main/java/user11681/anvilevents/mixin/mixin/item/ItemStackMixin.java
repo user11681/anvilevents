@@ -27,7 +27,7 @@ public abstract class ItemStackMixin {
         if (this.tooltip) {
             final ItemTooltipEvent event = new ItemTooltipEvent(player, thiz, context, info.getReturnValue()).fire();
 
-            switch (event.getResult()) {
+            switch (event.result) {
                 case PASS:
                     this.tooltip = false;
                     info.setReturnValue(event.getItemStack().getTooltip(event.getPlayer(), event.getContext()));

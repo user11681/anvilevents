@@ -28,7 +28,7 @@ public abstract class I18nMixin {
         if (Store.translate) {
             final TranslationEvent event = new TranslationEvent(info.getReturnValue(), key, args).fire();
 
-            switch (event.getResult()) {
+            switch (event.result) {
                 case PASS:
                     Store.translate = false;
                     info.setReturnValue(translate(event.getKey(), event.getArgs().toArray()));

@@ -41,7 +41,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
         if (this.knockback) {
             final LivingKnockbackEvent event = new LivingKnockbackEvent(thiz, speed, x, z).fire();
 
-            if (event.getResult() != ActionResult.FAIL) {
+            if (event.result != ActionResult.FAIL) {
                 this.knockback = false;
                 event.getEntity().takeKnockback(event.getSpeed(), event.getX(), event.getZ());
                 this.knockback = true;

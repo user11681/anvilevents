@@ -21,7 +21,7 @@ public abstract class ItemMixin {
     protected void onUse(final World world, final PlayerEntity user, final Hand hand, final CallbackInfoReturnable<TypedActionResult<ItemStack>> info) {
         if (this.use) {
             final UseItemEvent event = new UseItemEvent(user.getStackInHand(hand), world, user, hand).fire();
-            final ActionResult result = event.getResult();
+            final ActionResult result = event.result;
             final ItemStack itemStack = event.getItemStack();
 
             if (result == ActionResult.FAIL) {

@@ -23,7 +23,7 @@ public abstract class TranslationStorageMixin {
         if (Store.translate) {
             final TranslationEvent event = new TranslationEvent(info.getReturnValue(), key).fire();
 
-            switch (event.getResult()) {
+            switch (event.result) {
                 case PASS:
                     Store.translate = false;
                     info.setReturnValue(this.get(event.getKey()));

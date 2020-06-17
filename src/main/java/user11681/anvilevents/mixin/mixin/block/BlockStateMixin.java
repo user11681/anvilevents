@@ -23,7 +23,7 @@ public abstract class BlockStateMixin {
     protected void onUse(final World world, final PlayerEntity player, final Hand hand, final BlockHitResult hitResult, final CallbackInfoReturnable<ActionResult> info) {
         if (this.use) {
             final UseBlockEvent event = new UseBlockEvent(player, (BlockState) (Object) this, world, hand, hitResult).fire();
-            final ActionResult result = event.getResult();
+            final ActionResult result = event.result;
 
             if (event.isFail()) {
                 info.setReturnValue(result);
