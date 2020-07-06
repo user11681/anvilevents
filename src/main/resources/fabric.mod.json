@@ -25,8 +25,7 @@
         "anvilevents.mixins.json"
     ],
     "depends": {
-        "fabricloader": "*",
-        "fabric": "*"
+        "fabricloader": "*"
     },
     "custom": {
         "modmenu:api": true

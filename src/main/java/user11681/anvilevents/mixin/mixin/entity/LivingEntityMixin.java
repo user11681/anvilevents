@@ -18,7 +18,7 @@ import user11681.anvilevents.event.entity.living.LivingDeathEvent;
 import user11681.anvilevents.event.entity.living.LivingDropExperienceEvent;
 import user11681.anvilevents.event.entity.living.LivingKnockbackEvent;
 import user11681.anvilevents.event.entity.living.LivingTickEvent;
-import user11681.anvilevents.mixin.Store;
+import user11681.anvilevents.mixin.Flags;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin extends EntityMixin implements LivingEntityDuck {
@@ -84,7 +84,7 @@ public abstract class LivingEntityMixin extends EntityMixin implements LivingEnt
 
     @Inject(method = "handleFallDamage(FF)Z", at = @At("HEAD"), cancellable = true)
     protected void onHandleFallDamage(final float distance, final float damageMultiplier, final CallbackInfoReturnable<Boolean> info) {
-        if (Store.fall) {
+        if (Flags.fall) {
             super.onHandleFallDamage(distance, damageMultiplier, info);
         }
     }

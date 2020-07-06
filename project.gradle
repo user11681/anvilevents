@@ -5,8 +5,4 @@ dependencies {
 
     modApi "${project.anvil}"
     include "${project.anvil}"
-
-    modImplementation "${project.modmenu}"
-
-    modImplementation "${project.usersmanual}"
 }

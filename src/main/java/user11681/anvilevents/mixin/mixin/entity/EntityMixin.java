@@ -15,7 +15,7 @@ import user11681.anvilevents.event.entity.EnderTeleportEvent;
 import user11681.anvilevents.event.entity.EntityDamageEvent;
 import user11681.anvilevents.event.entity.EntityLandEvent;
 import user11681.anvilevents.event.entity.EntityTickEvent;
-import user11681.anvilevents.mixin.Store;
+import user11681.anvilevents.mixin.Flags;
 import user11681.anvilevents.mixin.duck.entity.LivingEntityDuck;
 
 @Mixin(Entity.class)
@@ -65,15 +65,15 @@ public abstract class EntityMixin {
 
     @Inject(method = "handleFallDamage(FF)Z", at = @At("HEAD"), cancellable = true)
     protected void onHandleFallDamage(final float distance, final float damageMultiplier, final CallbackInfoReturnable<Boolean> info) {
-        if (Store.fall) {
+        if (Flags.fall) {
             final EntityLandEvent event = new EntityLandEvent(thiz, distance, damageMultiplier).fire();
             final Entity entity = event.getEntity();
 
             if (!(entity instanceof LivingEntity)) {
                 if (!event.isFail()) {
-                    Store.fall = false;
+                    Flags.fall = false;
                     entity.handleFallDamage(event.getDistance(), event.getDamageMultiplier());
-                    Store.fall = true;
+                    Flags.fall = true;
                 }
 
                 info.cancel();

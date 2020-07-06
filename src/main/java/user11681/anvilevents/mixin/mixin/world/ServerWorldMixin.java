@@ -12,20 +12,20 @@ import user11681.anvilevents.event.entity.player.PlayerRespawnedEvent;
 
 @Mixin(ServerWorld.class)
 public abstract class ServerWorldMixin {
-    protected final ServerWorld thiz = (ServerWorld) (Object) this;
+    protected final ServerWorld self = (ServerWorld) (Object) this;
 
     @Inject(method = "onPlayerConnected", at = @At("HEAD"))
     protected void onOnPlayerConnected(final ServerPlayerEntity player, final CallbackInfo info) {
-        new PlayerConnectedEvent(player, thiz).fire();
+        new PlayerConnectedEvent(player, self).fire();
     }
 
     @Inject(method = "onPlayerChangeDimension", at = @At("HEAD"))
     protected void onOnPlayerChangeDimension(final ServerPlayerEntity player, final CallbackInfo info) {
-        new PlayerChangedDimensionEvent(player, thiz).fire();
+        new PlayerChangedDimensionEvent(player, self).fire();
     }
 
     @Inject(method = "onPlayerRespawned", at = @At("HEAD"))
     protected void onOnPlayerRespawned(final ServerPlayerEntity player, final CallbackInfo info) {
-        new PlayerRespawnedEvent(player, thiz).fire();
+        new PlayerRespawnedEvent(player, self).fire();
     }
 }

@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import user11681.anvilevents.event.i18n.TranslationEvent;
-import user11681.anvilevents.mixin.Store;
+import user11681.anvilevents.mixin.Flags;
 
 @Mixin(TranslationStorage.class)
 public abstract class TranslationStorageMixin {
@@ -20,14 +20,14 @@ public abstract class TranslationStorageMixin {
      */
     @Inject(method = "get(Ljava/lang/String;)Ljava/lang/String;", at = @At("RETURN"), cancellable = true)
     protected void get(final String key, final CallbackInfoReturnable<String> info) {
-        if (Store.translate) {
+        if (Flags.translate) {
             final TranslationEvent event = new TranslationEvent(info.getReturnValue(), key).fire();
 
             switch (event.result) {
                 case PASS:
-                    Store.translate = false;
+                    Flags.translate = false;
                     info.setReturnValue(this.get(event.getKey()));
-                    Store.translate = true;
+                    Flags.translate = true;
                     break;
                 case FAIL:
                     info.setReturnValue(key);
