@@ -3,6 +3,7 @@ version = "0.6.0"
 dependencies {
     compileOnly "${project.jsr}"
 
-    modApi "${project.anvil}"
-    include "${project.anvil}"
+    modApi include("${project.anvil}")
+
+    modApi include("${project.apiBase}")
 }
